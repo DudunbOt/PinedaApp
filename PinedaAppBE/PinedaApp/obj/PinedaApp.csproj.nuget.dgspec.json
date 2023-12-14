@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj": {}
+    "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
+    "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
         "projectName": "PinedaApp.Contracts",
-        "projectPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
+        "projectPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
         "packagesPath": "C:\\Users\\pined\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\obj\\",
+        "outputPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pined\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,28 +39,40 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj": {
+    "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj",
+        "projectUniqueName": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj",
         "projectName": "PinedaApp",
-        "projectPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj",
+        "projectPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\PinedaApp.csproj",
         "packagesPath": "C:\\Users\\pined\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\obj\\",
+        "outputPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pined\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -77,8 +89,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
-                "projectPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj"
+              "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
+                "projectPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj"
               }
             }
           }
@@ -92,17 +104,68 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Asp.Versioning.Mvc": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.10.4, )"
+            },
+            "Microsoft.AspNet.WebApi.Cors": {
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

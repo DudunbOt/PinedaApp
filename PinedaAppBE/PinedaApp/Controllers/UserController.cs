@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models.Errors;
@@ -21,6 +22,21 @@ namespace PinedaApp.Controllers
             {
                 List<UserResponse> responses = userService.GetUsers();
                 return Ok(responses);
+            }
+            catch (PinedaAppException ex)
+            {
+                ErrorResponse response = new ErrorResponse(ex.Message);
+                return StatusCode(ex.ErrorCode, response);
+            }
+        }
+
+        [HttpPost("GetToken")]
+        public IActionResult GetToken(LoginRequest request)
+        {
+            try
+            {
+                LoginResponse token = userService.GetToken(request.UserName, request.Password);
+                return Ok(token);
             }
             catch (PinedaAppException ex)
             {
@@ -76,6 +92,7 @@ namespace PinedaApp.Controllers
 
         }
 
+        [Authorize]
         [HttpPut("{id:int}")]
         public IActionResult UpdateUser(int id, UserRequest request)
         {
@@ -107,6 +124,7 @@ namespace PinedaApp.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult DeleteUser(int id)
         {

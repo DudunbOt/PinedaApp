@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "rcXDCI+QMYIrI8SocdkLuptQfTqu0+l7//1tueF3qVrc50NEGrUSdfOeWmBXA+ZYOofO88zl43od9peVd930Qw==",
+  "dgSpecHash": "6PJs3FgQHp6C+KHzp3+GcK8p3KOGgfsfN3baIFngZREqs+gMyFUQIctTBPdEjvwIbq9XqK9NoAShnTNwx+LKVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pined\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\pined\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\pined\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

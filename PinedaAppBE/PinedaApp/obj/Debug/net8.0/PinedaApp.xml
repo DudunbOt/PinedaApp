@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PinedaApp</name>
+    </assembly>
+    <members>
+        <member name="T:PinedaApp.Migrations.initMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.initMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.initMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.initMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PinedaApp.Migrations.allowNullEndDateExperience">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.allowNullEndDateExperience.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.allowNullEndDateExperience.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PinedaApp.Migrations.allowNullEndDateExperience.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

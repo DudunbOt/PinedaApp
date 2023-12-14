@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models;
 using PinedaApp.Models.DTO;
 using PinedaApp.Models.Errors;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -14,10 +18,30 @@ public class UserService : IUserService
 {
     private readonly PinedaAppContext _context;
     private readonly IMapper _mapper;
-    public UserService(PinedaAppContext context, IMapper mapper)
+    private readonly AppSettings _appSettings;
+    public UserService(PinedaAppContext context, IMapper mapper, IOptions<AppSettings> appSettings)
     {
         _context = context;
         _mapper = mapper;
+        _appSettings = appSettings.Value;
+    }
+
+    public LoginResponse GetToken(string username, string password)
+    {
+        User user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == HashPassword(password));
+        if(user == null)
+        {
+            throw new PinedaAppException("Username / Password is Incorrect");
+        }
+
+        List<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, username),
+        };
+
+        string token = GenerateToken(_appSettings.SecretKey, _appSettings.Issuer, _appSettings.Audience, claims);
+
+        return new LoginResponse(token);
     }
 
     public List<UserResponse> GetUsers()
@@ -187,5 +211,21 @@ public class UserService : IUserService
         );
 
         return response;
+    }
+
+    private string GenerateToken(string secretKey, string issuer, string audience, IEnumerable<Claim> claims)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: issuer,
+            audience: audience,
+            claims: claims,
+            expires: DateTime.Now.AddHours(1), // Token expiration time
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
