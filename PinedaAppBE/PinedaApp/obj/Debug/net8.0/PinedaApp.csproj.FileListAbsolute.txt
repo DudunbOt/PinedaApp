@@ -83,3 +83,5 @@ C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\PinedaApp.Contracts.dll
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\PinedaApp.Contracts.pdb
+C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\obj\Debug\net8.0\PinedaApp.sourcelink.json
+C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

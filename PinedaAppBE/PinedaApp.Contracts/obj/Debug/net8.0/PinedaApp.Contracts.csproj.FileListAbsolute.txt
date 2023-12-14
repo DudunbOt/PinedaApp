@@ -10,3 +10,4 @@ C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp.Contracts\
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp.Contracts\obj\Debug\net8.0\refint\PinedaApp.Contracts.dll
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp.Contracts\obj\Debug\net8.0\PinedaApp.Contracts.pdb
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp.Contracts\obj\Debug\net8.0\ref\PinedaApp.Contracts.dll
+C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp.Contracts\obj\Debug\net8.0\PinedaApp.Contracts.sourcelink.json
