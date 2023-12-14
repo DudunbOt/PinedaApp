@@ -1,0 +1,6 @@
+@PinedaApp_HostAddress = http://localhost:5123
+
+GET {{PinedaApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
