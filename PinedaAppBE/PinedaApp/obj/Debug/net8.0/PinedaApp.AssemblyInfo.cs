@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PinedaApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60dd8bcb8e210fc57a52c4b7fa5e8a59be7af4eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+442d85dae4db9e4ca2d5b474b1be568ba630edbf")]
 [assembly: System.Reflection.AssemblyProductAttribute("PinedaApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PinedaApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
