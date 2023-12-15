@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models.Errors;
@@ -24,7 +25,7 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
         }
@@ -39,11 +40,12 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateAcademic(AcademicRequest request)
         {
@@ -62,22 +64,29 @@ namespace PinedaApp.Controllers
             {
                 if (ex.InnerException is ValidationException validationEx)
                 {
-                    ErrorResponse response = new ErrorResponse(validationEx.ValidationErrors.Errors);
+                    ErrorResponse response = new(validationEx.ValidationErrors.Errors);
                     return BadRequest(response);
                 }
                 else
                 {
-                    ErrorResponse response = new ErrorResponse(ex.Message);
+                    ErrorResponse response = new(ex.Message);
                     return StatusCode(ex.ErrorCode, response);
                 }
             }
         }
 
+        [Authorize]
         [HttpPut("{id:int}")]
         public IActionResult UpdateAcademic(int id, AcademicRequest request)
         {
             try
             {
+                int userId = GetUserId();
+                if (userId == 0 || !CheckUserOwner(id, userId))
+                {
+                    ErrorResponse forbidden = new("Not Allowed to Update Data");
+                    return StatusCode(403, forbidden);
+                }
                 AcademicResponse updatedAcademic = _academicService.UpsertAcademic(request, id);
 
                 if (updatedAcademic.Id == id) return NoContent();
@@ -93,28 +102,36 @@ namespace PinedaApp.Controllers
             {
                 if (ex.InnerException is ValidationException validationEx)
                 {
-                    ErrorResponse response = new ErrorResponse(validationEx.ValidationErrors.Errors);
+                    ErrorResponse response = new(validationEx.ValidationErrors.Errors);
                     return BadRequest(response);
                 }
                 else
                 {
-                    ErrorResponse response = new ErrorResponse(ex.Message);
+                    ErrorResponse response = new(ex.Message);
                     return StatusCode(ex.ErrorCode, response);
                 }
             }
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult DeleteAcademic(int id)
         {
             try
             {
+                int userId = GetUserId();
+                if (userId == 0 || !CheckUserOwner(id, userId))
+                {
+                    ErrorResponse forbidden = new("Not Allowed to Delete Data");
+                    return StatusCode(403, forbidden);
+                }
+
                 _academicService.DeleteAcademic(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
         }

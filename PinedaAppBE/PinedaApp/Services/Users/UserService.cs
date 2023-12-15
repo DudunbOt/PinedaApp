@@ -29,16 +29,17 @@ public class UserService : IUserService
     public LoginResponse GetToken(string username, string password)
     {
         User user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == HashPassword(password));
-        if(user == null)
+        if (user == null)
         {
             throw new PinedaAppException("Username / Password is Incorrect");
         }
 
-        List<Claim> claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, username),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        };
+        List<Claim> claims =
+        [
+            new(ClaimTypes.Name, username),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Role, user.UserRole.ToString())
+        ];
 
         string token = GenerateToken(_appSettings.SecretKey, _appSettings.Issuer, _appSettings.Audience, claims);
 

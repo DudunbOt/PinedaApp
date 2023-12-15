@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
@@ -12,13 +11,11 @@ namespace PinedaApp.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUserService userService;
-        private string _userId;
         public UserController(IUserService _userService)
         {
             userService = _userService;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
@@ -29,7 +26,7 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
         }
@@ -44,11 +41,12 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateUser(UserRequest request)
         {
@@ -67,19 +65,18 @@ namespace PinedaApp.Controllers
             {
                 if (ex.InnerException is ValidationException validationEx)
                 {
-                    ErrorResponse response = new ErrorResponse(validationEx.ValidationErrors.Errors);
+                    ErrorResponse response = new(validationEx.ValidationErrors.Errors);
                     return BadRequest(response);
                 }
                 else
                 {
-                    ErrorResponse response = new ErrorResponse(ex.Message);
+                    ErrorResponse response = new(ex.Message);
                     return StatusCode(ex.ErrorCode, response);
                 }
             }
 
         }
 
-        [Authorize]
         [HttpGet("{id:int}")]
         public IActionResult GetUser(int id)
         {
@@ -91,7 +88,7 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return NotFound(response);
             }
 
@@ -103,14 +100,11 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                string userId = GetUserId();
-                if (userId == null)
+                int userId = GetUserId();
+                if (userId == 0 || !CheckUserOwner(id, userId))
                 {
-                    return Forbid();
-                }
-                else if (!CheckUserOwner(id, Int32.Parse(userId)))
-                {
-                    return Forbid();
+                    ErrorResponse forbidden = new("Not Allowed to Update Data");
+                    return StatusCode(403, forbidden);
                 }
 
                 UserResponse updatedUser = userService.UpsertUser(request, id);
@@ -128,12 +122,12 @@ namespace PinedaApp.Controllers
             {
                 if (ex.InnerException is ValidationException validationEx)
                 {
-                    ErrorResponse response = new ErrorResponse(validationEx.ValidationErrors.Errors);
+                    ErrorResponse response = new(validationEx.ValidationErrors.Errors);
                     return BadRequest(response);
                 }
                 else
                 {
-                    ErrorResponse response = new ErrorResponse(ex.Message);
+                    ErrorResponse response = new(ex.Message);
                     return StatusCode(ex.ErrorCode, response);
                 }
             }
@@ -145,13 +139,11 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                string userId = GetUserId();
-                if(userId == null)
+                int userId = GetUserId();
+                if (userId == 0 || !CheckUserOwner(id, userId))
                 {
-                    return Forbid();
-                }else if(!CheckUserOwner(id, Int32.Parse(userId)))
-                {
-                    return Forbid();
+                    ErrorResponse forbidden = new("Not Allowed to Delete Data");
+                    return StatusCode(403, forbidden);
                 }
 
                 userService.DeleteUser(id);
@@ -159,26 +151,10 @@ namespace PinedaApp.Controllers
             }
             catch (PinedaAppException ex)
             {
-                ErrorResponse response = new ErrorResponse(ex.Message);
+                ErrorResponse response = new(ex.Message);
                 return StatusCode(ex.ErrorCode, response);
             }
 
-        }
-
-        private string? GetUserId()
-        {
-            if(_userId != null) return _userId;
-
-            return HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        }
-
-        private bool CheckUserOwner(int id, int userId)
-        {
-            if(userId == 0) return false;
-            if(id == 0) return false;
-            if(id != userId) return false;
-
-            return true;
         }
 
     }

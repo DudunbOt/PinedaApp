@@ -8,7 +8,6 @@
         string LastName,
         string Email,
         string Phone,
-        string Address,
-        string Role
+        string Address
     );
 }
