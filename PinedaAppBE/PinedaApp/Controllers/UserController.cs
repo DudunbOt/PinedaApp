@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models.Errors;
 using PinedaApp.Services;
+using System.Security.Claims;
 
 namespace PinedaApp.Controllers
 {
     public class UserController : BaseApiController
     {
         private readonly IUserService userService;
+        private string _userId;
         public UserController(IUserService _userService)
         {
             userService = _userService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
@@ -75,6 +79,7 @@ namespace PinedaApp.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public IActionResult GetUser(int id)
         {
@@ -98,6 +103,16 @@ namespace PinedaApp.Controllers
         {
             try
             {
+                string userId = GetUserId();
+                if (userId == null)
+                {
+                    return Forbid();
+                }
+                else if (!CheckUserOwner(id, Int32.Parse(userId)))
+                {
+                    return Forbid();
+                }
+
                 UserResponse updatedUser = userService.UpsertUser(request, id);
 
                 if (updatedUser.Id == id) return NoContent();
@@ -130,6 +145,15 @@ namespace PinedaApp.Controllers
         {
             try
             {
+                string userId = GetUserId();
+                if(userId == null)
+                {
+                    return Forbid();
+                }else if(!CheckUserOwner(id, Int32.Parse(userId)))
+                {
+                    return Forbid();
+                }
+
                 userService.DeleteUser(id);
                 return NoContent();
             }
@@ -141,6 +165,21 @@ namespace PinedaApp.Controllers
 
         }
 
+        private string? GetUserId()
+        {
+            if(_userId != null) return _userId;
+
+            return HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        private bool CheckUserOwner(int id, int userId)
+        {
+            if(userId == 0) return false;
+            if(id == 0) return false;
+            if(id != userId) return false;
+
+            return true;
+        }
 
     }
 }

@@ -9,6 +9,7 @@
         string Email,
         string Phone,
         string Address,
+        string Role,
         List<object> Academics,
         List<object> Experiences,
         List<object> Portofolios,

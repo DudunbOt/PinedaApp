@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {}
+    "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
+    "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
         "projectName": "PinedaApp.Contracts",
-        "projectPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
+        "projectPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\PinedaApp.Contracts.csproj",
         "packagesPath": "C:\\Users\\pined\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pined\\Source\\Repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\obj\\",
+        "outputPath": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pined\\AppData\\Roaming\\NuGet\\NuGet.Config",

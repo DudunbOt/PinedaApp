@@ -37,6 +37,7 @@ public class UserService : IUserService
         List<Claim> claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, username),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
 
         string token = GenerateToken(_appSettings.SecretKey, _appSettings.Issuer, _appSettings.Audience, claims);
@@ -131,6 +132,7 @@ public class UserService : IUserService
             Email = request.Email,
             Phone = request.Phone,
             Address = request.Address,
+            UserRole = Role.User,
             CreatedAt = DateTime.Now,
             LastUpdatedAt = DateTime.Now,
         };
@@ -203,6 +205,7 @@ public class UserService : IUserService
             user.Email,
             user.Phone,
             user.Address,
+            user.UserRole.ToString(),
             academics.Cast<object>().ToList(),
             experiences.Cast<object>().ToList(),
             portofolios.Cast<object>().ToList(),

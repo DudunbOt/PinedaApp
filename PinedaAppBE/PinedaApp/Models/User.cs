@@ -15,11 +15,18 @@ namespace PinedaApp.Models
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
+        public Role? UserRole { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
 
         public virtual ICollection<Academic>? Academics { get; set; }
         public virtual ICollection<Experience>? Experiences { get; set; }
         public virtual ICollection<Portfolio>? Portfolios { get; set; }
+    }
+
+    public enum Role
+    {
+        Owner,
+        User
     }
 }
