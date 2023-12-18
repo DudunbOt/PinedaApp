@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2023-12-15T04:27:08.0330827Z;True|2023-12-15T11:14:37.8551045+07:00;True|2023-12-15T11:13:46.2749090+07:00;True|2023-12-15T11:00:15.3536415+07:00;</History>
+    <History>True|2023-12-15T06:04:57.5627970Z;True|2023-12-15T13:02:35.6623390+07:00;True|2023-12-15T11:34:43.2924539+07:00;True|2023-12-15T11:27:08.0330827+07:00;True|2023-12-15T11:14:37.8551045+07:00;True|2023-12-15T11:13:46.2749090+07:00;True|2023-12-15T11:00:15.3536415+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

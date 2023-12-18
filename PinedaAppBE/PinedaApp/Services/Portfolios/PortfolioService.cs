@@ -36,7 +36,7 @@ namespace PinedaApp.Services
         public List<PortfolioResponse> GetPortfolios()
         {
             List<Portfolio> portfolios = _context.Portfolio.ToList();
-            if (portfolios.Count == 0)
+            if (portfolios == null || portfolios.Count == 0)
             {
                 throw new PinedaAppException("No Data", 404);
             }
@@ -87,13 +87,13 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
             }
 
-            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "Asset", "Portfolio");
+            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Assets", "Portfolio");
             if (!Directory.Exists(uploadFolder))
             {
                 Directory.CreateDirectory(uploadFolder);
             }
 
-            string fullFilePath = null;
+            string filename = null;
             if (request.ImageFile != null)
             {
                 using SHA256 sha256 = SHA256.Create();
@@ -106,8 +106,8 @@ namespace PinedaApp.Services
                 byte[] hashBytes = sha256.ComputeHash(fileBytes);
                 string hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
 
-                string filename = hash + Path.GetExtension(request.ImageFile.FileName);
-                fullFilePath = Path.Combine(uploadFolder, filename);
+                filename = hash + Path.GetExtension(request.ImageFile.FileName);
+                string fullFilePath = Path.Combine(uploadFolder, filename);
 
                 if (!File.Exists(fullFilePath))
                 {
@@ -121,7 +121,7 @@ namespace PinedaApp.Services
                 UserId = request.UserId,
                 Name = request.Name,
                 Description = request.Description,
-                ImageFilePath = fullFilePath,
+                ImageFilePath = filename,
                 CreatedAt = DateTime.Now,
                 LastUpdatedAt = DateTime.Now
             };
@@ -154,12 +154,12 @@ namespace PinedaApp.Services
             {
                 string extension = Path.GetExtension(request.ImageFile.FileName).ToLower();
                 long fileSize = request.ImageFile.Length / 1024;
-                if (allowedExtension.Contains(extension))
+                if (!allowedExtension.Contains(extension))
                 {
                     validationErrors.AddError($"Image File type must be either {string.Join(", ", allowedExtension)}");
                 }
 
-                if (fileSize > 5)
+                if (fileSize > 5000)
                 {
                     validationErrors.AddError($"Image size must be less than 5MB");
                 }

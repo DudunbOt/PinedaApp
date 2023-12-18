@@ -48,7 +48,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateUser(UserRequest request)
+        public IActionResult CreateUser([FromForm] UserRequest request)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public IActionResult UpdateUser(int id, UserRequest request)
+        public IActionResult UpdateUser(int id, [FromForm] UserRequest request)
         {
             try
             {

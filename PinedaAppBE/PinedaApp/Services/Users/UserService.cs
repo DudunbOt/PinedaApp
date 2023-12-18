@@ -49,12 +49,16 @@ public class UserService : IUserService
     public List<UserResponse> GetUsers()
     {
         List<User> users = _context.Users.ToList();
-        List<UserResponse> responses = new List<UserResponse>();
+        if (users == null || users.Count == 0)
+        {
+            throw new PinedaAppException("No Data", 404);
+        }
 
+        List<UserResponse> responses = new List<UserResponse>();
         foreach (User user in users)
         {
             UserResponse response = CreateUserResponse(user);
-            responses.Add(CreateUserResponse(user));
+            responses.Add(response);
         }
 
         return responses;

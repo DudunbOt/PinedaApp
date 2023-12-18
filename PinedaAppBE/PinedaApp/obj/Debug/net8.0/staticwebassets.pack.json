@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg",
+      "PackagePath": "staticwebassets\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PinedaApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PinedaApp.props",
+      "PackagePath": "build\\PinedaApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PinedaApp.props",
+      "PackagePath": "buildMultiTargeting\\PinedaApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PinedaApp.props",
+      "PackagePath": "buildTransitive\\PinedaApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

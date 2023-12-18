@@ -48,7 +48,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateExperience(ExperienceRequest request)
+        public IActionResult CreateExperience([FromForm] ExperienceRequest request)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public IActionResult UpdateExperience(int id, ExperienceRequest request)
+        public IActionResult UpdateExperience(int id, [FromForm] ExperienceRequest request)
         {
             try
             {

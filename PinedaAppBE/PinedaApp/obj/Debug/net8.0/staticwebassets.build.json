@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "fgBdj1xBgMjf0G2XPMJRfguDIw8UPeF+mUwiZfXGsd0=",
+  "Hash": "w+R0Kl/9bnFtDxlCMyu35OvZV8bp1rg4Pal9XzMwpy8=",
   "Source": "PinedaApp",
   "BasePath": "_content/PinedaApp",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "PinedaApp\\wwwroot",
+      "Source": "PinedaApp",
+      "ContentRoot": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\",
+      "BasePath": "_content/PinedaApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg",
+      "SourceId": "PinedaApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\",
+      "BasePath": "_content/PinedaApp",
+      "RelativePath": "Assets/Portfolio/260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg"
+    }
+  ]
 }

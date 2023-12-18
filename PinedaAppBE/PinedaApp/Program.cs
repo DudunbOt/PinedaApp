@@ -107,8 +107,10 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
+
+app.UseStaticFiles();
 
 app.Run();

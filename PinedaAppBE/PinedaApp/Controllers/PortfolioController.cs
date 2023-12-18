@@ -49,7 +49,8 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreatePortfolio(PortfolioRequest request)
+        [Consumes("multipart/form-data")]
+        public IActionResult CreatePortfolio([FromForm] PortfolioRequest request)
         {
             try
             {
@@ -78,7 +79,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public IActionResult UpdatePortfolio(PortfolioRequest request, int id)
+        public IActionResult UpdatePortfolio([FromForm] PortfolioRequest request, int id)
         {
             try
             {

@@ -35,8 +35,12 @@ public class AcademicService(PinedaAppContext context) : IAcademicServices
     public List<AcademicResponse> GetAcademics()
     {
         List<Academic> academics = _context.Academic.ToList();
-        List<AcademicResponse> responses = new List<AcademicResponse>();
+        if (academics == null || academics.Count == 0)
+        {
+            throw new PinedaAppException("No Data", 404);
+        }
 
+        List<AcademicResponse> responses = new List<AcademicResponse>();
         foreach (Academic academic in academics)
         {
             AcademicResponse response = CreateAcademicResponse(academic);

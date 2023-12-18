@@ -47,7 +47,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateAcademic(AcademicRequest request)
+        public IActionResult CreateAcademic([FromForm] AcademicRequest request)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public IActionResult UpdateAcademic(int id, AcademicRequest request)
+        public IActionResult UpdateAcademic(int id, [FromForm] AcademicRequest request)
         {
             try
             {

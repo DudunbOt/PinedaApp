@@ -12,7 +12,7 @@
         string Role,
         List<object> Academics,
         List<object> Experiences,
-        List<object> Portofolios,
+        List<object> Portfolios,
         DateTime CreatedAt,
         DateTime UpdatedAt
     );
