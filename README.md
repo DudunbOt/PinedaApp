@@ -1,5 +1,5 @@
 # PinedaApp
-My Current Working Personal Project Backend Side, intended as whatever feature i need in the future
+My Current Working Personal Project, intended as whatever feature i need in the future
 
 # Technology Used
 ASP.NET CORE 8
