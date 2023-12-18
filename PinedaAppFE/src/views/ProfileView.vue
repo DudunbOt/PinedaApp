@@ -90,7 +90,7 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
                 :key="index"
                 cols="4"
               >
-                <PortfolioComponent />
+                <PortfolioComponent :content="portfolio" />
               </b-col>
             </b-row>
           </div>
