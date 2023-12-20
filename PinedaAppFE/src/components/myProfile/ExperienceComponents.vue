@@ -6,9 +6,9 @@
         {{ this.startDate }} - {{ this.endDate }}
       </div>
       <div class="section-content-location">
-        {{ this.company }} | {{ this.role }}
+        {{ this.content.companyName }} | {{ this.content.position }}
       </div>
-      <div class="">To Be Completed. (Company Job Short Description)</div>
+      <div class="">{{ this.content.shortDesc }}</div>
       <div
         class="section-content-detail p-3"
         v-for="(project, index) in this.projects"
@@ -46,18 +46,6 @@ export default {
       let endDate = this.content.endDate;
       if (endDate === null) return "Until Now";
       return this.getDateExperience(endDate);
-    },
-
-    company() {
-      return this.content.companyName;
-    },
-
-    role() {
-      return this.content.position;
-    },
-
-    projects() {
-      return this.content.projects;
     },
   },
 };

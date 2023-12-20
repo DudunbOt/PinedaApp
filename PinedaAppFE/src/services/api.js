@@ -2,8 +2,8 @@ import Axios from "axios";
 
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? import.meta.env.VITE_BASE_URL
-    : import.meta.env.VITE_BASE_URL_DEV;
+    ? import.meta.env.VITE_API_URL
+    : import.meta.env.VITE_API_URL_DEV;
 
 const axiosInstance = Axios.create({
   baseURL,

@@ -10,9 +10,9 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
             <b-col cols="12" class="mb-4 center-image">
               <b-img
                 class="mt-2"
-                :src="imagePath"
+                :src="UserProfile.ProfilePicture"
                 rounded="circle"
-                width="200"
+                width="250"
                 fluid
                 block
               ></b-img>
@@ -112,7 +112,7 @@ export default {
   methods: {
     async GetMyProfile() {
       this.$axios
-        .get("/user/1")
+        .get("/user/1003")
         .then((response) => {
           this.bindData(response.data);
         })
@@ -121,7 +121,16 @@ export default {
         });
     },
 
+    GetProfilePicture(profilePicture) {
+      if(profilePicture == null) return imagePath;
+
+      let fullpath = import.meta.env.VITE_BASE_URL + "/Users/ProfilePicture/" + profilePicture;
+
+      return fullpath;
+    },
+
     bindData(UserProfile) {
+      console.log(UserProfile.profilePicture);
       this.UserProfile.firstname = UserProfile.firstName;
       this.UserProfile.lastname = UserProfile.lastName;
       this.UserProfile.email = UserProfile.email;
@@ -130,6 +139,8 @@ export default {
       this.UserProfile.academics = UserProfile.academics;
       this.UserProfile.experiences = UserProfile.experiences;
       this.UserProfile.portfolios = UserProfile.portfolios;
+      this.UserProfile.Occupation = UserProfile.Occupation;
+      this.UserProfile.ProfilePicture = this.GetProfilePicture(UserProfile.profilePicture);
     },
 
     capitalize(text) {

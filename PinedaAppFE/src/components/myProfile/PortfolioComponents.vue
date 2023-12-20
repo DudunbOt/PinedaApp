@@ -12,15 +12,17 @@
 </template>
 
 <script>
-const baseUrl = import.meta.env.VITE_MEDIA_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL;
+import imagePath from "../../assets/stock_image.jpeg";
 export default {
   props: {
     content: Object,
   },
   computed: {
     imgUrl() {
-      return baseUrl + "/Portfolio/" + this.content.imageFilePath;
-    }
-  }
+      if (this.content.imageFilePath == null) return imagePath;
+      return baseUrl + "/Assets/Portfolio/" + this.content.imageFilePath;
+    },
+  },
 };
 </script>
