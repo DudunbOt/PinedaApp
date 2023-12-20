@@ -113,6 +113,11 @@ public class UserService : BaseService, IUserService
         toUpdate.Email = newUser.Email;
         toUpdate.Phone = newUser.Phone;
         toUpdate.Address = newUser.Address;
+        toUpdate.Occupation = newUser.Occupation;
+        if(!string.IsNullOrEmpty(toUpdate.ProfilePicture) && newUser.ProfilePicture != null && toUpdate.ProfilePicture != newUser.ProfilePicture)
+        {
+            toUpdate.ProfilePicture = newUser.ProfilePicture;
+        }
         toUpdate.LastUpdatedAt = DateTime.Now;
 
         _context.Update(toUpdate);
@@ -128,6 +133,8 @@ public class UserService : BaseService, IUserService
             throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
         }
 
+        string pfpFileName = UploadMediaFile(request.ProfilePicture, "Users", "ProfilePicture");
+
         User user = new()
         {
             UserName = request.UserName,
@@ -137,6 +144,8 @@ public class UserService : BaseService, IUserService
             Email = request.Email,
             Phone = request.Phone,
             Address = request.Address,
+            Occupation = request.Occupation,
+            ProfilePicture = pfpFileName,
             UserRole = Role.User,
             CreatedAt = DateTime.Now,
             LastUpdatedAt = DateTime.Now,
@@ -211,6 +220,8 @@ public class UserService : BaseService, IUserService
             user.Phone,
             user.Address,
             user.UserRole.ToString(),
+            user.Occupation,
+            user.ProfilePicture,
             academics.Cast<object>().ToList(),
             experiences.Cast<object>().ToList(),
             portofolios.Cast<object>().ToList(),
@@ -219,21 +230,5 @@ public class UserService : BaseService, IUserService
         );
 
         return response;
-    }
-
-    private string GenerateToken(string secretKey, string issuer, string audience, IEnumerable<Claim> claims)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: issuer,
-            audience: audience,
-            claims: claims,
-            expires: DateTime.Now.AddHours(1), // Token expiration time
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

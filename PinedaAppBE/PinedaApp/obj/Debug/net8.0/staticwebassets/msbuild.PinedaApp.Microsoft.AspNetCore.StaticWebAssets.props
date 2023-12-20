@@ -1,11 +1,11 @@
 ﻿<Project>
   <ItemGroup>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Assets\Portfolio\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Assets\Portfolio\86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>PinedaApp</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/PinedaApp</BasePath>
-      <RelativePath>Assets/Portfolio/260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg</RelativePath>
+      <RelativePath>Assets/Portfolio/86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
@@ -14,7 +14,39 @@
       <AssetTraitValue></AssetTraitValue>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Assets\Portfolio\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Assets\Portfolio\86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\test.txt))">
+      <SourceType>Package</SourceType>
+      <SourceId>PinedaApp</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/PinedaApp</BasePath>
+      <RelativePath>test.txt</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\test.txt))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Users\ProfilePicture\977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>PinedaApp</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/PinedaApp</BasePath>
+      <RelativePath>Users/ProfilePicture/977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Users\ProfilePicture\977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

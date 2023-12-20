@@ -5,6 +5,7 @@
         int UserId,
         string CompanyName,
         string Position,
+        string ShortDesc,
         string StartDate,
         string? EndDate
     );

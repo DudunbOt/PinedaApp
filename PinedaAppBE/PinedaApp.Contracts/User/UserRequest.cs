@@ -1,4 +1,6 @@
-﻿namespace PinedaApp.Contracts
+﻿using Microsoft.AspNetCore.Http;
+
+namespace PinedaApp.Contracts
 {
     public record UserRequest
     (
@@ -8,6 +10,8 @@
         string LastName,
         string Email,
         string Phone,
-        string Address
+        string Address,
+        IFormFile? ProfilePicture,
+        string Occupation
     );
 }

@@ -71,7 +71,10 @@ namespace PinedaApp.Services
 
             toUpdate.Name = portfolio.Name;
             toUpdate.Description = portfolio.Description;
-            toUpdate.ImageFilePath = portfolio.ImageFilePath;
+            if (!string.IsNullOrEmpty(toUpdate.ImageFilePath) && portfolio.ImageFilePath != null && toUpdate.ImageFilePath != portfolio.ImageFilePath)
+            {
+                toUpdate.ImageFilePath = portfolio.ImageFilePath;
+            }
             toUpdate.LastUpdatedAt = DateTime.Now;
 
             _context.Portfolio.Add(toUpdate);
@@ -123,7 +126,7 @@ namespace PinedaApp.Services
             {
                 validationErrors.AddError("Portfolio Name is empty");
             }
-            if (request.ImageFile.Length > 0)
+            if (request.ImageFile != null && request.ImageFile.Length > 0)
             {
                 string extension = Path.GetExtension(request.ImageFile.FileName).ToLower();
                 long fileSize = request.ImageFile.Length / 1024;

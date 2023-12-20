@@ -85,8 +85,6 @@ C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\PinedaApp.Contracts.pdb
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\obj\Debug\net8.0\PinedaApp.sourcelink.json
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\pined\Source\Repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\PinedaApp.xml
-C:\Users\pined\Source\Repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\obj\Debug\net8.0\PinedaApp.xml
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Humanizer.dll
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\pined\source\repos\MyProject\PinedaApp\PinedaAppBE\PinedaApp\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll

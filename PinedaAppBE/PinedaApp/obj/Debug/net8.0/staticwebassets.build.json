@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w+R0Kl/9bnFtDxlCMyu35OvZV8bp1rg4Pal9XzMwpy8=",
+  "Hash": "JpzxNeKSgtRxDT5Fhcwb6+c17bwApFJdxE4o2wYIr+o=",
   "Source": "PinedaApp",
   "BasePath": "_content/PinedaApp",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg",
+      "Identity": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\Assets\\Portfolio\\86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg",
       "SourceId": "PinedaApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\",
       "BasePath": "_content/PinedaApp",
-      "RelativePath": "Assets/Portfolio/260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg",
+      "RelativePath": "Assets/Portfolio/86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -33,7 +33,45 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Assets\\Portfolio\\260FBC6376C9088720CA76B244C87C4B613DADA2FBAA6B086BBB3CAA549679AE.jpg"
+      "OriginalItemSpec": "wwwroot\\Assets\\Portfolio\\86D715CDD471A962D013C93111835D35599AC65F49B3B3F8442570C483A9BB3E.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\test.txt",
+      "SourceId": "PinedaApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\",
+      "BasePath": "_content/PinedaApp",
+      "RelativePath": "test.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\test.txt"
+    },
+    {
+      "Identity": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\Users\\ProfilePicture\\977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg",
+      "SourceId": "PinedaApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pined\\source\\repos\\MyProject\\PinedaApp\\PinedaAppBE\\PinedaApp\\wwwroot\\",
+      "BasePath": "_content/PinedaApp",
+      "RelativePath": "Users/ProfilePicture/977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\ProfilePicture\\977C97C4CF8C2BE94B3317301F834F5391EDE6D47089653E47667ECB2D2C5622.jpg"
     }
   ]
 }

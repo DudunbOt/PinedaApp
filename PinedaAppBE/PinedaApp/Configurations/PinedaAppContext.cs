@@ -49,6 +49,8 @@ namespace PinedaApp.Configurations
                 .HasMany(e => e.ProjectHandled)
                 .WithOne(p => p.Experience)
                 .HasForeignKey(p => p.ExperienceId);
+            modelBuilder.Entity<Experience>().Property(e => e.EndDate).IsRequired(false);
+            
         }
     }
 }

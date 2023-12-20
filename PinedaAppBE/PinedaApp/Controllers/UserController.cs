@@ -46,7 +46,7 @@ namespace PinedaApp.Controllers
             }
         }
 
-        [Authorize]
+        
         [HttpPost]
         public IActionResult CreateUser([FromForm] UserRequest request)
         {

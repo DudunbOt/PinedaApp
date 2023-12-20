@@ -10,6 +10,8 @@
         string Phone,
         string Address,
         string Role,
+        string Occupation,
+        string ProfilePicture,
         List<object> Academics,
         List<object> Experiences,
         List<object> Portfolios,

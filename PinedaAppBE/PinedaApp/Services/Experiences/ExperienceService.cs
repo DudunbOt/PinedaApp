@@ -76,6 +76,7 @@ namespace PinedaApp.Services
                 toUpdate.CompanyName = experience.CompanyName;
                 toUpdate.Position = experience.Position;
                 toUpdate.StartDate = experience.StartDate;
+                toUpdate.ShortDesc = experience.ShortDesc;
                 toUpdate.EndDate = experience.EndDate;
                 toUpdate.LastUpdatedAt = DateTime.Now;
 
@@ -94,26 +95,17 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
             }
 
-            DateTime startDate;
-            DateTime endDate;
-
-            if (!DateTime.TryParse(request.StartDate, out startDate))
-            {
-                throw new PinedaAppException("Start Date format must be (YYYY-MM-dd)", 400);
-            }
-
-            if (!DateTime.TryParse(request.EndDate, out endDate))
-            {
-                throw new PinedaAppException("End Date format must be (YYYY-MM-dd)", 400);
-            }
+            DateTime startDate = ConvertDate(request.StartDate);
+            DateTime endDate = ConvertDate(request.EndDate);
 
             Experience experience = new Experience()
             {
                 UserId = request.UserId,
                 CompanyName = request.CompanyName,
                 Position = request.Position,
+                ShortDesc = request.ShortDesc,
                 StartDate = startDate,
-                EndDate = endDate,
+                EndDate = endDate == DateTime.MinValue ? null : endDate,
                 CreatedAt = DateTime.Now,
                 LastUpdatedAt = DateTime.Now
             };
@@ -168,6 +160,7 @@ namespace PinedaApp.Services
                 experience.UserId,
                 experience.CompanyName,
                 experience.Position,
+                experience.ShortDesc,
                 experience.StartDate,
                 experience.EndDate,
                 experience.CreatedAt,
