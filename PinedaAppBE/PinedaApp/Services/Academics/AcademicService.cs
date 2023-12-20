@@ -5,7 +5,7 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services;
 
-public class AcademicService(PinedaAppContext context) : IAcademicServices
+public class AcademicService(PinedaAppContext context) : BaseService, IAcademicServices
 {
     private readonly PinedaAppContext _context = context;
 

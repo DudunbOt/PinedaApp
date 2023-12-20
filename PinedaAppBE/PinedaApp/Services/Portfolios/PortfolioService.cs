@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace PinedaApp.Services
 {
-    public class PortfolioService(PinedaAppContext context) : IPortfolioService
+    public class PortfolioService(PinedaAppContext context) : BaseService, IPortfolioService
     {
         private readonly PinedaAppContext _context = context;
 
@@ -87,34 +87,7 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
             }
 
-            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Assets", "Portfolio");
-            if (!Directory.Exists(uploadFolder))
-            {
-                Directory.CreateDirectory(uploadFolder);
-            }
-
-            string filename = null;
-            if (request.ImageFile != null)
-            {
-                using SHA256 sha256 = SHA256.Create();
-                byte[] fileBytes = new byte[request.ImageFile.Length];
-                using (Stream fs = request.ImageFile.OpenReadStream())
-                {
-                    fs.Read(fileBytes, 0, (int)fileBytes.Length);
-                }
-
-                byte[] hashBytes = sha256.ComputeHash(fileBytes);
-                string hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-
-                filename = hash + Path.GetExtension(request.ImageFile.FileName);
-                string fullFilePath = Path.Combine(uploadFolder, filename);
-
-                if (!File.Exists(fullFilePath))
-                {
-                    using FileStream fileStream = new FileStream(fullFilePath, FileMode.Create);
-                    request.ImageFile.CopyTo(fileStream);
-                }
-            }
+            string filename = UploadMediaFile(request.ImageFile, "Assets", "Portfolio");
 
             Portfolio portfolio = new Portfolio()
             {

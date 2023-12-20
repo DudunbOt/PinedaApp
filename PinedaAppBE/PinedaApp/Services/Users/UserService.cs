@@ -14,7 +14,7 @@ using System.Text;
 
 namespace PinedaApp.Services;
 
-public class UserService : IUserService
+public class UserService : BaseService, IUserService
 {
     private readonly PinedaAppContext _context;
     private readonly IMapper _mapper;

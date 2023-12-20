@@ -8,7 +8,7 @@ using PinedaApp.Configurations;
 
 namespace PinedaApp.Services
 {
-    public class ExperienceService(PinedaAppContext context, IMapper mapper) : IExperienceServices
+    public class ExperienceService(PinedaAppContext context, IMapper mapper) : BaseService, IExperienceServices
     {
         private readonly PinedaAppContext _context = context;
         private readonly IMapper _mapper = mapper;
