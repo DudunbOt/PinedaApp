@@ -11,7 +11,7 @@
       <div class="">{{ this.content.shortDesc }}</div>
       <div
         class="section-content-detail p-3"
-        v-for="(project, index) in this.projects"
+        v-for="(project, index) in this.content.projects"
         :key="index"
       >
         <div class="font-weight-bold">{{ project.projectName }}</div>

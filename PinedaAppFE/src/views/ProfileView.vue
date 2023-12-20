@@ -11,8 +11,7 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
               <b-img
                 class="mt-2"
                 :src="UserProfile.ProfilePicture"
-                rounded="circle"
-                width="250"
+                width="200"
                 fluid
                 block
               ></b-img>
@@ -61,12 +60,9 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
             <p class="user-name">
               <b>{{ UserProfile.firstname }}</b> {{ UserProfile.lastname }}
             </p>
-            <p class="job-title">Software Engineer</p>
+            <p class="job-title">{{ UserProfile.Occupation }}</p>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto ea,
-              voluptatibus consectetur ut, in cupiditate ullam modi aspernatur
-              aliquam aliquam aut dolores earum cum porro illo commodi incidunt
-              nam exercitationem nemo!
+              {{ UserProfile.Bio }}
             </p>
           </div>
           <div class="w-100 p-2" id="">
@@ -122,9 +118,12 @@ export default {
     },
 
     GetProfilePicture(profilePicture) {
-      if(profilePicture == null) return imagePath;
+      if (profilePicture == null) return imagePath;
 
-      let fullpath = import.meta.env.VITE_BASE_URL + "/Users/ProfilePicture/" + profilePicture;
+      let fullpath =
+        import.meta.env.VITE_BASE_URL +
+        "/Users/ProfilePicture/" +
+        profilePicture;
 
       return fullpath;
     },
@@ -139,7 +138,8 @@ export default {
       this.UserProfile.academics = UserProfile.academics;
       this.UserProfile.experiences = UserProfile.experiences;
       this.UserProfile.portfolios = UserProfile.portfolios;
-      this.UserProfile.Occupation = UserProfile.Occupation;
+      this.UserProfile.Occupation = UserProfile.occupation;
+      this.UserProfile.Bio = UserProfile.bio;
       this.UserProfile.ProfilePicture = this.GetProfilePicture(UserProfile.profilePicture);
     },
 

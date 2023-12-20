@@ -1,10 +1,17 @@
 <template>
   <div class="side-content">
-    <ul>
+    <span
+      class="badge badge-info"
+      v-for="(data, index) in dataList"
+      :key="index"
+    >
+      {{ data }}
+    </span>
+    <!-- <ul>
       <li v-for="(data, index) in dataList" :key="index">
         {{ data }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 <script>
@@ -17,5 +24,10 @@ export default {
 <style scoped>
 .side-content {
   margin-top: 20px;
+  margin-bottom: 10px;
+}
+.badge {
+  font-size: 16px;
+  margin: 2px;
 }
 </style>
