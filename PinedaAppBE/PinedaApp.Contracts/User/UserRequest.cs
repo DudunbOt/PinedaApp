@@ -8,6 +8,7 @@ namespace PinedaApp.Contracts
         string Password,
         string FirstName,
         string LastName,
+        string Bio,
         string Email,
         string Phone,
         string Address,

@@ -110,6 +110,7 @@ public class UserService : BaseService, IUserService
         toUpdate.Password = newUser.Password;
         toUpdate.FirstName = newUser.FirstName;
         toUpdate.LastName = newUser.LastName;
+        toUpdate.Bio = newUser.Bio;
         toUpdate.Email = newUser.Email;
         toUpdate.Phone = newUser.Phone;
         toUpdate.Address = newUser.Address;
@@ -141,6 +142,7 @@ public class UserService : BaseService, IUserService
             Password = HashPassword(request.Password),
             FirstName = request.FirstName,
             LastName = request.LastName,
+            Bio = request.Bio,
             Email = request.Email,
             Phone = request.Phone,
             Address = request.Address,
@@ -216,6 +218,7 @@ public class UserService : BaseService, IUserService
             user.UserName,
             user.FirstName,
             user.LastName,
+            user.Bio,
             user.Email,
             user.Phone,
             user.Address,
