@@ -1,6 +1,4 @@
-<script setup>
-const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
-</script>
+<script setup></script>
 <template>
   <div>
     <b-container>
@@ -10,7 +8,7 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
             <b-col cols="12" class="mb-4 center-image">
               <b-img
                 class="mt-2"
-                :src="UserProfile.ProfilePicture"
+                :src="UserProfile.profilePicture"
                 width="200"
                 fluid
                 block
@@ -48,7 +46,7 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
               <div class="side-title">
                 <p class="mb-0 mr-3">Expertise</p>
               </div>
-              <SideContentList :dataList="experts" />
+              <SideContentList :dataList="UserProfile.expertises" />
             </b-col>
             <b-col class="d-flex justify-content-center">
               <SideButton />
@@ -60,10 +58,8 @@ const experts = ["C#", "PHP", "HTML", "CSS", "Javascript", "Vue.JS"];
             <p class="user-name">
               <b>{{ UserProfile.firstname }}</b> {{ UserProfile.lastname }}
             </p>
-            <p class="job-title">{{ UserProfile.Occupation }}</p>
-            <p>
-              {{ UserProfile.Bio }}
-            </p>
+            <p class="job-title">{{ UserProfile.occupation }}</p>
+            <p>{{ UserProfile.bio }}</p>
           </div>
           <div class="w-100 p-2" id="">
             <div class="section-title">
@@ -129,7 +125,6 @@ export default {
     },
 
     bindData(UserProfile) {
-      console.log(UserProfile.profilePicture);
       this.UserProfile.firstname = UserProfile.firstName;
       this.UserProfile.lastname = UserProfile.lastName;
       this.UserProfile.email = UserProfile.email;
@@ -138,9 +133,10 @@ export default {
       this.UserProfile.academics = UserProfile.academics;
       this.UserProfile.experiences = UserProfile.experiences;
       this.UserProfile.portfolios = UserProfile.portfolios;
-      this.UserProfile.Occupation = UserProfile.occupation;
-      this.UserProfile.Bio = UserProfile.bio;
-      this.UserProfile.ProfilePicture = this.GetProfilePicture(UserProfile.profilePicture);
+      this.UserProfile.occupation = UserProfile.occupation;
+      this.UserProfile.bio = UserProfile.bio;
+      this.UserProfile.profilePicture = this.GetProfilePicture(UserProfile.profilePicture);
+      this.UserProfile.expertises = UserProfile.expertises;
     },
 
     capitalize(text) {
