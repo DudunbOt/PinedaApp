@@ -1,6 +1,6 @@
 ﻿namespace PinedaApp.Contracts
 {
-    public record ProjectHandledRequest 
+    public record ProjectRequest 
     (
         int ExperienceId, 
         string ProjectName,

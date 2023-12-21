@@ -11,8 +11,9 @@ namespace PinedaApp.Configurations
             CreateMap<Academic, AcademicDto>();
             CreateMap<Portfolio, PortfolioDto>();
             CreateMap<Experience, ExperienceDto>()
-                .ForMember(dest => dest.Projects, opt => opt.MapFrom(src => src.ProjectHandled));
-            CreateMap<ProjectHandled, ProjectHandledDto>();
+                .ForMember(dest => dest.Projects, opt => opt.MapFrom(src => src.Project));
+            CreateMap<Project, ProjectDto>();
+            CreateMap<Expertise, ExpertiseDto>();
         }
     }
 }

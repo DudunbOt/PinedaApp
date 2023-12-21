@@ -7,20 +7,20 @@ using PinedaApp.Services;
 
 namespace PinedaApp.Controllers
 {
-    public class ProjectHandledController : BaseApiController
+    public class ProjectController : BaseApiController
     {
-        private readonly IProjectHandledService _projectHandledService;
-        public ProjectHandledController(IProjectHandledService projectHandledService)
+        private readonly IProjectService _projectService;
+        public ProjectController(IProjectService projectService)
         {
-            _projectHandledService = projectHandledService;
+            _projectService = projectService;
         }
 
         [HttpGet]
-        public IActionResult GetProjectHandled()
+        public IActionResult GetProject()
         {
             try
             {
-                List<ProjectHandledResponse> responses = _projectHandledService.GetProjectHandled();
+                List<ProjectResponse> responses = _projectService.GetProject();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -31,11 +31,11 @@ namespace PinedaApp.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetProjectHandled(int id)
+        public IActionResult GetProject(int id)
         {
             try
             {
-                ProjectHandledResponse response = _projectHandledService.GetProjecthandled(id);
+                ProjectResponse response = _projectService.GetProject(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -47,15 +47,15 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateProjectHandled([FromForm] ProjectHandledRequest request)
+        public IActionResult CreateProject([FromForm] ProjectRequest request)
         {
             try
             {
-                ProjectHandledResponse response = _projectHandledService.UpsertProjectHandled(request);
+                ProjectResponse response = _projectService.UpsertProject(request);
 
                 return CreatedAtAction
                 (
-                    actionName: nameof(GetProjectHandled),
+                    actionName: nameof(GetProject),
                     routeValues: new { id = response.Id },
                     value: response
                 );
@@ -77,7 +77,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public IActionResult UpdateProjectHandled(int id, [FromForm] ProjectHandledRequest request)
+        public IActionResult UpdateProject(int id, [FromForm] ProjectRequest request)
         {
             try
             {
@@ -87,15 +87,15 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                ProjectHandledResponse updateProjectHandled = _projectHandledService.UpsertProjectHandled(request, id);
+                ProjectResponse updateProject = _projectService.UpsertProject(request, id);
 
-                if (updateProjectHandled.Id == id) return NoContent();
+                if (updateProject.Id == id) return NoContent();
 
                 return CreatedAtAction
                 (
-                    actionName: nameof(GetProjectHandled),
-                    routeValues: new { id = updateProjectHandled.Id },
-                    value: updateProjectHandled
+                    actionName: nameof(GetProject),
+                    routeValues: new { id = updateProject.Id },
+                    value: updateProject
                 );
             }
             catch (PinedaAppException ex)
@@ -115,7 +115,7 @@ namespace PinedaApp.Controllers
 
         [Authorize]
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteProjectHandled(int id)
+        public IActionResult DeleteProject(int id)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _projectHandledService.DeleteProjectHandled(id);
+                _projectService.DeleteProject(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

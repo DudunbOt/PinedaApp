@@ -16,6 +16,7 @@
         List<object> Academics,
         List<object> Experiences,
         List<object> Portfolios,
+        List<string> Expertises,
         DateTime CreatedAt,
         DateTime UpdatedAt
     );

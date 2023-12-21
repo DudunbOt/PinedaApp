@@ -90,7 +90,7 @@ public class UserService : BaseService, IUserService
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
-        User newUser = BindUserFromRequest(request);
+        User user = BindUserFromRequest(request);
         User toUpdate = null;
 
         if (id != null)
@@ -100,30 +100,32 @@ public class UserService : BaseService, IUserService
 
         if (id == null || toUpdate == null)
         {
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-            return CreateUserResponse(newUser);
+            _context.Users.Add(user);
         }
-
-
-        toUpdate.UserName = newUser.UserName;
-        toUpdate.Password = newUser.Password;
-        toUpdate.FirstName = newUser.FirstName;
-        toUpdate.LastName = newUser.LastName;
-        toUpdate.Bio = newUser.Bio;
-        toUpdate.Email = newUser.Email;
-        toUpdate.Phone = newUser.Phone;
-        toUpdate.Address = newUser.Address;
-        toUpdate.Occupation = newUser.Occupation;
-        if(!string.IsNullOrEmpty(toUpdate.ProfilePicture) && newUser.ProfilePicture != null && toUpdate.ProfilePicture != newUser.ProfilePicture)
+        else
         {
-            toUpdate.ProfilePicture = newUser.ProfilePicture;
-        }
-        toUpdate.LastUpdatedAt = DateTime.Now;
+            toUpdate.UserName = user.UserName;
+            toUpdate.Password = user.Password;
+            toUpdate.FirstName = user.FirstName;
+            toUpdate.LastName = user.LastName;
+            toUpdate.Bio = user.Bio;
+            toUpdate.Email = user.Email;
+            toUpdate.Phone = user.Phone;
+            toUpdate.Address = user.Address;
+            toUpdate.Occupation = user.Occupation;
+            if (!string.IsNullOrEmpty(toUpdate.ProfilePicture) && user.ProfilePicture != null && toUpdate.ProfilePicture != user.ProfilePicture)
+            {
+                toUpdate.ProfilePicture = user.ProfilePicture;
+            }
+            toUpdate.LastUpdatedAt = DateTime.Now;
 
-        _context.Update(toUpdate);
+            _context.Update(toUpdate);
+            user = toUpdate;
+
+        }
+
         _context.SaveChanges();
-        return CreateUserResponse(toUpdate);
+        return CreateUserResponse(user);
     }
 
     private User? BindUserFromRequest(UserRequest request)
@@ -210,7 +212,12 @@ public class UserService : BaseService, IUserService
             .Where(a => a.UserId == user.Id)
             .ProjectTo<ExperienceDto>(_mapper.ConfigurationProvider);
 
+        IEnumerable<ExpertiseDto> expertises = _context.Expertise
+            .Where(a => a.UserId == user.Id)
+            .ProjectTo<ExpertiseDto>(_mapper.ConfigurationProvider);
 
+        ExpertiseDto expertise = expertises.FirstOrDefault();
+        List<string> stringList = expertise.Skills.Split(',').ToList();
 
         UserResponse response = new UserResponse
         (
@@ -228,6 +235,7 @@ public class UserService : BaseService, IUserService
             academics.Cast<object>().ToList(),
             experiences.Cast<object>().ToList(),
             portofolios.Cast<object>().ToList(),
+            stringList,
             user.CreatedAt,
             user.LastUpdatedAt
         );

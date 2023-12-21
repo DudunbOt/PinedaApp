@@ -10,6 +10,6 @@
         public DateTime? EndDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public List<ProjectHandledDto> Projects { get; set; }
+        public List<ProjectDto> Projects { get; set; }
     }
 }

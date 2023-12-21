@@ -11,7 +11,8 @@ namespace PinedaApp.Configurations
         public DbSet<Academic> Academic { get; set; }
         public DbSet<Portfolio> Portfolio { get; set; }
         public DbSet<Experience> Experience { get; set; }
-        public DbSet<ProjectHandled> ProjectHandled { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<Expertise> Expertise { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,10 +46,16 @@ namespace PinedaApp.Configurations
                 .WithOne(f => f.User)
                 .HasForeignKey(f => f.UserId);
 
+            modelBuilder.Entity<User>()
+                .HasOne(p => p.Expertise)
+                .WithOne(f => f.User)
+                .HasForeignKey<Expertise>(f => f.UserId);
+
             modelBuilder.Entity<Experience>()
-                .HasMany(e => e.ProjectHandled)
+                .HasMany(e => e.Project)
                 .WithOne(p => p.Experience)
                 .HasForeignKey(p => p.ExperienceId);
+
             modelBuilder.Entity<Experience>().Property(e => e.EndDate).IsRequired(false);
             
         }

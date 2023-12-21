@@ -68,8 +68,6 @@ namespace PinedaApp.Services
             if (id == null || toUpdate == null)
             {
                 _context.Experience.Add(experience);
-                _context.SaveChanges();
-                return CreateExperienceResponse(experience);
             }
             else
             {
@@ -81,10 +79,11 @@ namespace PinedaApp.Services
                 toUpdate.LastUpdatedAt = DateTime.Now;
 
                 _context.Experience.Update(toUpdate);
-                _context.SaveChanges();
-
-                return CreateExperienceResponse(toUpdate);
+                experience = toUpdate;
             }
+
+            _context.SaveChanges();
+            return CreateExperienceResponse(experience);
         }
 
         private Experience? BindExperienceFromRequest(ExperienceRequest request)
@@ -150,9 +149,9 @@ namespace PinedaApp.Services
 
         private ExperienceResponse CreateExperienceResponse(Experience experience)
         {
-            IEnumerable<ProjectHandledDto> projects = _context.ProjectHandled
+            IEnumerable<ProjectDto> projects = _context.Project
                 .Where(e => e.ExperienceId == experience.Id)
-                .ProjectTo<ProjectHandledDto>(_mapper.ConfigurationProvider);
+                .ProjectTo<ProjectDto>(_mapper.ConfigurationProvider);
 
             ExperienceResponse response = new ExperienceResponse
             (

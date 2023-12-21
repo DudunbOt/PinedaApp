@@ -55,7 +55,7 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
-        Academic newAcademic = BindAcademicFromRequest(request);
+        Academic academic = BindAcademicFromRequest(request);
         Academic toUpdate = null;
 
         if (id != null)
@@ -65,20 +65,22 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
 
         if (id == null || toUpdate == null)
         {
-            _context.Academic.Add(newAcademic);
-            _context.SaveChanges();
-            return CreateAcademicResponse(newAcademic);
+            _context.Academic.Add(academic);
+        } 
+        else
+        {
+            toUpdate.SchoolName = academic.SchoolName;
+            toUpdate.Degree = academic.Degree;
+            toUpdate.StartDate = academic.StartDate;
+            toUpdate.EndDate = academic.EndDate;
+            toUpdate.LastUpdatedAt = DateTime.Now;
+
+            _context.Update(toUpdate);
+            academic = toUpdate;
         }
-
-        toUpdate.SchoolName = newAcademic.SchoolName;
-        toUpdate.Degree = newAcademic.Degree;
-        toUpdate.StartDate = newAcademic.StartDate;
-        toUpdate.EndDate = newAcademic.EndDate;
-        toUpdate.LastUpdatedAt = DateTime.Now;
-
-        _context.Update(toUpdate);
+       
         _context.SaveChanges();
-        return CreateAcademicResponse(toUpdate);
+        return CreateAcademicResponse(academic);
     }
 
     private Academic? BindAcademicFromRequest(AcademicRequest request)

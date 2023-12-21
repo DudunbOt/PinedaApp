@@ -17,7 +17,7 @@ namespace PinedaApp.Models
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
 
-        public virtual ICollection<ProjectHandled> ProjectHandled { get; set; }
+        public virtual ICollection<Project> Project { get; set; }
 
         public int UserId { get; set; }
         [JsonIgnore]

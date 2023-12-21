@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace PinedaApp.Models
 {
-    public class ProjectHandled
+    public class Project
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -73,7 +73,8 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAcademicServices, AcademicService>();
 builder.Services.AddTransient<IExperienceServices, ExperienceService>();
 builder.Services.AddTransient<IPortfolioService, PortfolioService>();
-builder.Services.AddTransient<IProjectHandledService, ProjectHandledService>();
+builder.Services.AddTransient<IProjectService, ProjectService>();
+builder.Services.AddTransient<IExpertiseService, ExpertiseService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

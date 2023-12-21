@@ -64,19 +64,21 @@ namespace PinedaApp.Services
             if (id == null || toUpdate == null)
             {
                 _context.Portfolio.Add(portfolio);
-                _context.SaveChanges();
-                return CreatePortfolioResponse(portfolio);
             }
-
-            toUpdate.Name = portfolio.Name;
-            toUpdate.Description = portfolio.Description;
-            if (!string.IsNullOrEmpty(toUpdate.ImageFilePath) && portfolio.ImageFilePath != null && toUpdate.ImageFilePath != portfolio.ImageFilePath)
+            else
             {
-                toUpdate.ImageFilePath = portfolio.ImageFilePath;
-            }
-            toUpdate.LastUpdatedAt = DateTime.Now;
+                toUpdate.Name = portfolio.Name;
+                toUpdate.Description = portfolio.Description;
+                if (!string.IsNullOrEmpty(toUpdate.ImageFilePath) && portfolio.ImageFilePath != null && toUpdate.ImageFilePath != portfolio.ImageFilePath)
+                {
+                    toUpdate.ImageFilePath = portfolio.ImageFilePath;
+                }
+                toUpdate.LastUpdatedAt = DateTime.Now;
 
-            _context.Portfolio.Add(toUpdate);
+                _context.Portfolio.Add(toUpdate);
+                portfolio = toUpdate;
+            }
+           
             _context.SaveChanges();
             return CreatePortfolioResponse(portfolio);
         }

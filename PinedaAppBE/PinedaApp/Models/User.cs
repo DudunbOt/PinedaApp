@@ -25,6 +25,7 @@ namespace PinedaApp.Models
         public virtual ICollection<Academic>? Academics { get; set; }
         public virtual ICollection<Experience>? Experiences { get; set; }
         public virtual ICollection<Portfolio>? Portfolios { get; set; }
+        public virtual Expertise Expertise { get; set; }
     }
 
     public enum Role
