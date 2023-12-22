@@ -7,21 +7,14 @@ using PinedaApp.Services;
 
 namespace PinedaApp.Controllers
 {
-    public class ExpertiseController : BaseApiController
-    {
-        private readonly IExpertiseService _expertiseService;
-        private int newId = 0;
-        public ExpertiseController(IExpertiseService expertiseService)
-        {
-            _expertiseService = expertiseService;
-        }
-
+    public class ExpertiseController(IExpertiseService expertiseService) : BaseApiController<IExpertiseService>(expertiseService)
+    {     
         [HttpGet]
         public IActionResult GetExpertises()
         {
             try
             {
-                Response responses = _expertiseService.GetExpertises();
+                Response responses = _service.GetExpertises();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -36,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _expertiseService.GetExpertise(id);
+                Response response = _service.GetExpertise(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -52,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _expertiseService.UpsertExpertise(request, out newId);
+                Response response = _service.UpsertExpertise(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -88,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updatedExpertise = _expertiseService.UpsertExpertise(request, out newId, id);
+                Response updatedExpertise = _service.UpsertExpertise(request, out newId, id);
 
                 if (newId == id) return NoContent();
 
@@ -127,7 +120,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _expertiseService.DeleteExpertise(id);
+                _service.DeleteExpertise(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

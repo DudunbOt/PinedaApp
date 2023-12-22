@@ -5,10 +5,9 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services;
 
-public class AcademicService(PinedaAppContext context) : BaseService, IAcademicServices
+public class AcademicService: ServiceBase, IAcademicServices
 {
-    private readonly PinedaAppContext _context = context;
-
+    public AcademicService(PinedaAppContext context) : base(context) { }
     public void DeleteAcademic(int id)
     {
         Academic academic = _context.Academic.FirstOrDefault(a => a.Id == id);

@@ -13,6 +13,8 @@ namespace PinedaApp.Configurations
         public DbSet<Experience> Experience { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Expertise> Expertise { get; set; }
+        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<TransactionCategory> TransactionCategory { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,7 +58,19 @@ namespace PinedaApp.Configurations
                 .WithOne(p => p.Experience)
                 .HasForeignKey(p => p.ExperienceId);
 
-            modelBuilder.Entity<Experience>().Property(e => e.EndDate).IsRequired(false);
+            modelBuilder.Entity<Experience>()
+                .Property(e => e.EndDate)
+                .IsRequired(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Transactions)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId);
+
+            modelBuilder.Entity<TransactionCategory>()
+                .HasMany(tc => tc.Transactions)
+                .WithOne(t => t.Category)
+                .HasForeignKey(t => t.CategoryId);
             
         }
     }

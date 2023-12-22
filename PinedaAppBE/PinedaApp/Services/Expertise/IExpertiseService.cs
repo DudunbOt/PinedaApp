@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services
 {
-    public interface IExpertiseService
+    public interface IExpertiseService : IServiceBase
     {
         Response GetExpertises();
         Response GetExpertise(int id);

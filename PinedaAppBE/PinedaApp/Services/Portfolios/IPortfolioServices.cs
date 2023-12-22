@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services
 {
-    public interface IPortfolioService
+    public interface IPortfolioService : IServiceBase
     {
         Response GetPortfolios();
         Response GetPortfolio(int id);

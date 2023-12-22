@@ -8,10 +8,8 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services
 {
-    public class ExpertiseService(PinedaAppContext context) : BaseService, IExpertiseService
+    public class ExpertiseService(PinedaAppContext context) : ServiceBase(context), IExpertiseService
     {
-        private readonly PinedaAppContext _context = context;
-
         public void DeleteExpertise(int id)
         {
             Expertise expertise = _context.Expertise.FirstOrDefault(x => x.Id == id);

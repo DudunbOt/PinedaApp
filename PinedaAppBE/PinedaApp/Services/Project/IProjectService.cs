@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services
 {
-    public interface IProjectService
+    public interface IProjectService : IServiceBase
     {
         Response GetProject();
         Response GetProject(int id);

@@ -5,10 +5,8 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services
 {
-    public class PortfolioService(PinedaAppContext context) : BaseService, IPortfolioService
+    public class PortfolioService(PinedaAppContext context) : ServiceBase(context), IPortfolioService
     {
-        private readonly PinedaAppContext _context = context;
-
         public void DeletePortfolio(int id)
         {
             Portfolio portfolio = _context.Portfolio.FirstOrDefault(p => p.Id == id);

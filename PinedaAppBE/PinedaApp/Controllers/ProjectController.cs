@@ -7,21 +7,14 @@ using PinedaApp.Services;
 
 namespace PinedaApp.Controllers
 {
-    public class ProjectController : BaseApiController
+    public class ProjectController(IProjectService projectService) : BaseApiController<IProjectService>(projectService)
     {
-        private readonly IProjectService _projectService;
-        private int newId = 0;
-        public ProjectController(IProjectService projectService)
-        {
-            _projectService = projectService;
-        }
-
         [HttpGet]
         public IActionResult GetProject()
         {
             try
             {
-                Response responses = _projectService.GetProject();
+                Response responses = _service.GetProject();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -36,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _projectService.GetProject(id);
+                Response response = _service.GetProject(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -52,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _projectService.UpsertProject(request, out newId);
+                Response response = _service.UpsertProject(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -88,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updateProject = _projectService.UpsertProject(request, out newId, id);
+                Response updateProject = _service.UpsertProject(request, out newId, id);
 
                 if (newId == id) return NoContent();
 
@@ -127,7 +120,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _projectService.DeleteProject(id);
+                _service.DeleteProject(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

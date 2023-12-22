@@ -7,21 +7,14 @@ using PinedaApp.Services;
 
 namespace PinedaApp.Controllers
 {
-    public class AcademicController : BaseApiController
+    public class AcademicController(IAcademicServices academicService) : BaseApiController<IAcademicServices>(academicService)
     {
-        private readonly IAcademicServices _academicService;
-        private int newId;
-        public AcademicController(IAcademicServices academicService)
-        {
-            _academicService = academicService;
-        }
-
         [HttpGet]
         public IActionResult GetAcademics()
         {
             try
             {
-                Response responses = _academicService.GetAcademics();
+                Response responses = _service.GetAcademics();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -36,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _academicService.GetAcademic(id);
+                Response response = _service.GetAcademic(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -52,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _academicService.UpsertAcademic(request, out newId);
+                Response response = _service.UpsertAcademic(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -88,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updatedAcademic = _academicService.UpsertAcademic(request, out newId, id);
+                Response updatedAcademic = _service.UpsertAcademic(request, out newId, id);
 
                 if (newId == id) return NoContent();
 
@@ -127,7 +120,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _academicService.DeleteAcademic(id);
+                _service.DeleteAcademic(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

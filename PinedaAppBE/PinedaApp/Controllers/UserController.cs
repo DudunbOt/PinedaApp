@@ -8,21 +8,14 @@ using System.Security.Claims;
 
 namespace PinedaApp.Controllers
 {
-    public class UserController : BaseApiController
+    public class UserController(IUserService userService) : BaseApiController<IUserService>(userService)
     {
-        private readonly IUserService userService;
-        private int newId = 0;
-        public UserController(IUserService _userService)
-        {
-            userService = _userService;
-        }
-
         [HttpGet]
         public IActionResult GetUsers()
         {
             try
             {
-                Response responses = userService.GetUsers();
+                Response responses = _service.GetUsers();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -32,12 +25,12 @@ namespace PinedaApp.Controllers
             }
         }
 
-        [HttpPost("GetToken")]
+        [HttpPost("Login")]
         public IActionResult GetToken(LoginRequest request)
         {
             try
             {
-                Response token = userService.GetToken(request.UserName, request.Password);
+                Response token = _service.GetToken(request.UserName, request.Password);
                 return Ok(token);
             }
             catch (PinedaAppException ex)
@@ -53,7 +46,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = userService.UpsertUser(request, out newId);
+                Response response = _service.UpsertUser(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -83,7 +76,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response user = userService.GetUser(id);
+                Response user = _service.GetUser(id);
 
                 return Ok(user);
             }
@@ -108,7 +101,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                Response updatedUser = userService.UpsertUser(request, out newId, id);
+                Response updatedUser = _service.UpsertUser(request, out newId, id);
 
                 if (newId == id) return NoContent();
 
@@ -147,7 +140,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                userService.DeleteUser(id);
+                _service.DeleteUser(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

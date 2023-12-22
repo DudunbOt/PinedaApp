@@ -12,18 +12,8 @@ using System.Text;
 
 namespace PinedaApp.Services;
 
-public class UserService : BaseService, IUserService
+public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppSettings> appSettings) : ServiceBase(context, mapper, appSettings), IUserService
 {
-    private readonly PinedaAppContext _context;
-    private readonly IMapper _mapper;
-    private readonly AppSettings _appSettings;
-    public UserService(PinedaAppContext context, IMapper mapper, IOptions<AppSettings> appSettings)
-    {
-        _context = context;
-        _mapper = mapper;
-        _appSettings = appSettings.Value;
-    }
-
     public Response GetToken(string username, string password)
     {
         User user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == HashPassword(password));

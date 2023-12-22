@@ -5,17 +5,11 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services
 {
-    public class ProjectService(PinedaAppContext context) : BaseService, IProjectService
+    public class ProjectService(PinedaAppContext context) : ServiceBase(context), IProjectService
     {
-        private readonly PinedaAppContext _context = context;
         public void DeleteProject(int id)
         {
-            Project project = _context.Project.FirstOrDefault(p => p.Id == id);
-            if(project == null)
-            {
-                throw new PinedaAppException($"No Project data with id {id} to be deleted", 404);
-            }
-
+            Project project = _context.Project.FirstOrDefault(p => p.Id == id) ?? throw new PinedaAppException($"No Project data with id {id} to be deleted", 404);
             _context.Project.Remove(project);
             _context.SaveChanges();
         }

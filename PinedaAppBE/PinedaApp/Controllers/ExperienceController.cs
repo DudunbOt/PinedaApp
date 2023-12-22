@@ -8,21 +8,14 @@ using PinedaApp.Services;
 
 namespace PinedaApp.Controllers
 {
-    public class ExperienceController : BaseApiController
+    public class ExperienceController(IExperienceServices experience) : BaseApiController<IExperienceServices>(experience)
     {
-        private readonly IExperienceServices _experience;
-        private int newId;
-        public ExperienceController(IExperienceServices experience)
-        {
-            _experience = experience;
-        }
-
         [HttpGet]
         public IActionResult GetExperiences()
         {
             try
             {
-                Response responses = _experience.GetExperiences();
+                Response responses = _service.GetExperiences();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -37,7 +30,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _experience.GetExperience(id);
+                Response response = _service.GetExperience(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -53,7 +46,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _experience.UpsertExperience(request, out newId);
+                Response response = _service.UpsertExperience(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExperience),
@@ -89,7 +82,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                Response response = _experience.UpsertExperience(request, out newId, id);
+                Response response = _service.UpsertExperience(request, out newId, id);
                 if (newId == id) return NoContent();
 
                 return CreatedAtAction
@@ -128,7 +121,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _experience.DeleteExperience(id);
+                _service.DeleteExperience(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

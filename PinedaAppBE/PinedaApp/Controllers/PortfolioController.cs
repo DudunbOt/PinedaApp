@@ -8,21 +8,14 @@ using System.Security.Claims;
 
 namespace PinedaApp.Controllers
 {
-    public class PortfolioController : BaseApiController
+    public class PortfolioController(IPortfolioService portfolioService) : BaseApiController<IPortfolioService>(portfolioService)
     {
-        private readonly IPortfolioService _portfolioService;
-        private int newId = 0;
-        public PortfolioController(IPortfolioService portfolioService)
-        {
-            _portfolioService = portfolioService;
-        }
-
         [HttpGet]
         public IActionResult GetPortofolios()
         {
             try
             {
-                Response responses = _portfolioService.GetPortfolios();
+                Response responses = _service.GetPortfolios();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -37,7 +30,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _portfolioService.GetPortfolio(id);
+                Response response = _service.GetPortfolio(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -54,7 +47,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _portfolioService.UpsertPortfolio(request, out newId);
+                Response response = _service.UpsertPortfolio(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetPortfolio),
@@ -89,7 +82,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Delete Data");
                     return StatusCode(403, forbidden);
                 }
-                Response response = _portfolioService.UpsertPortfolio(request, out newId);
+                Response response = _service.UpsertPortfolio(request, out newId);
 
                 if (newId == id) return NoContent();
 
@@ -128,7 +121,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                _portfolioService.DeletePortfolio(id);
+                _service.DeletePortfolio(id);
                 return NoContent();
             }
             catch (PinedaAppException ex)

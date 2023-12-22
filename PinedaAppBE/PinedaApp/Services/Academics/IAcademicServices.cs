@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services;
 
-public interface IAcademicServices
+public interface IAcademicServices : IServiceBase
 {
     Response GetAcademics();
     Response GetAcademic(int id);

@@ -1,4 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,8 +10,28 @@ using System.Text;
 
 namespace PinedaApp.Services
 {
-    public class BaseService
+    public class ServiceBase
     {
+        protected PinedaAppContext _context;
+        protected IMapper? _mapper;
+        protected AppSettings? _appSettings;
+
+        public ServiceBase(PinedaAppContext context, IMapper mapper, IOptions<AppSettings> appSettings)
+        {
+            _context = context;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
+        }
+        public ServiceBase(PinedaAppContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+        public ServiceBase(PinedaAppContext context)
+        {
+            _context = context;
+        }
+        
         protected DateTime ConvertDate(string date)
         {
             if(string.IsNullOrEmpty(date)) return DateTime.MinValue;

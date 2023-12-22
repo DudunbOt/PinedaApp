@@ -7,9 +7,11 @@ namespace PinedaApp.Configurations
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v1.0/[controller]")]
-    public class BaseApiController : ControllerBase
+    public class BaseApiController<TService>(TService service) : ControllerBase where TService : class
     {
-        private int _userId = 0;
+        protected readonly TService _service = service;
+        private int _userId;
+        protected int newId;
         protected int GetUserId()
         {
             if (_userId != 0) return _userId;

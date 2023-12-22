@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services
 {
-    public interface IExperienceServices
+    public interface IExperienceServices : IServiceBase
     {
         Response GetExperiences();
         Response GetExperience(int id);

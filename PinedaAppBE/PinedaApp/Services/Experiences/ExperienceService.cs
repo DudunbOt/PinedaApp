@@ -8,11 +8,8 @@ using PinedaApp.Configurations;
 
 namespace PinedaApp.Services
 {
-    public class ExperienceService(PinedaAppContext context, IMapper mapper) : BaseService, IExperienceServices
+    public class ExperienceService(PinedaAppContext context, IMapper mapper) : ServiceBase(context, mapper), IExperienceServices
     {
-        private readonly PinedaAppContext _context = context;
-        private readonly IMapper _mapper = mapper;
-
         public void DeleteExperience(int id)
         {
             Experience experience = _context.Experience.FirstOrDefault(e => e.Id == id);
