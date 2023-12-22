@@ -11,6 +11,7 @@ namespace PinedaApp.Controllers
     public class ExperienceController : BaseApiController
     {
         private readonly IExperienceServices _experience;
+        private int newId;
         public ExperienceController(IExperienceServices experience)
         {
             _experience = experience;
@@ -21,7 +22,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<ExperienceResponse> responses = _experience.GetExperiences();
+                Response responses = _experience.GetExperiences();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -36,7 +37,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ExperienceResponse response = _experience.GetExperience(id);
+                Response response = _experience.GetExperience(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -52,11 +53,11 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ExperienceResponse response = _experience.UpsertExperience(request);
+                Response response = _experience.UpsertExperience(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExperience),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -88,13 +89,13 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                ExperienceResponse response = _experience.UpsertExperience(request, id);
-                if (response.Id == id) return NoContent();
+                Response response = _experience.UpsertExperience(request, out newId, id);
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExperience),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
 

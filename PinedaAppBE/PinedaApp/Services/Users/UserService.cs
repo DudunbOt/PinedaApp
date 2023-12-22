@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models;
 using PinedaApp.Models.DTO;
 using PinedaApp.Models.Errors;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -26,7 +24,7 @@ public class UserService : BaseService, IUserService
         _appSettings = appSettings.Value;
     }
 
-    public LoginResponse GetToken(string username, string password)
+    public Response GetToken(string username, string password)
     {
         User user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == HashPassword(password));
         if (user == null)
@@ -43,10 +41,10 @@ public class UserService : BaseService, IUserService
 
         string token = GenerateToken(_appSettings.SecretKey, _appSettings.Issuer, _appSettings.Audience, claims);
 
-        return new LoginResponse(token);
+        return CreateResponse("success", ("token", token));
     }
 
-    public List<UserResponse> GetUsers()
+    public Response GetUsers()
     {
         List<User> users = _context.Users.ToList();
         if (users == null || users.Count == 0)
@@ -54,14 +52,14 @@ public class UserService : BaseService, IUserService
             throw new PinedaAppException("No Data", 404);
         }
 
-        List<UserResponse> responses = new List<UserResponse>();
+        List<UserResponse> responses = [];
         foreach (User user in users)
         {
             UserResponse response = CreateUserResponse(user);
             responses.Add(response);
         }
 
-        return responses;
+        return CreateResponse("success", ("user", responses));
     }
 
     public void DeleteUser(int id)
@@ -76,17 +74,19 @@ public class UserService : BaseService, IUserService
         _context.SaveChanges();
     }
 
-    public UserResponse GetUser(int id)
+    public Response GetUser(int id)
     {
         User user = _context.Users.FirstOrDefault(x => x.Id == id);
         if (user == null)
         {
             throw new PinedaAppException($"User with id {id} not found", 404);
         }
-        return CreateUserResponse(user);
+
+        UserResponse userResponse = CreateUserResponse(user);
+        return CreateResponse("success", ("user", userResponse));
     }
 
-    public UserResponse UpsertUser(UserRequest request, int? id = null)
+    public Response UpsertUser(UserRequest request, out int newId, int? id = null)
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
@@ -125,7 +125,11 @@ public class UserService : BaseService, IUserService
         }
 
         _context.SaveChanges();
-        return CreateUserResponse(user);
+
+        newId = user.Id;
+
+        UserResponse userResponse = CreateUserResponse(user);
+        return CreateResponse("success", ("user", userResponse));
     }
 
     private User? BindUserFromRequest(UserRequest request)

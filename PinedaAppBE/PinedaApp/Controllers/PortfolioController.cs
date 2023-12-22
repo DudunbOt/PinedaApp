@@ -11,7 +11,7 @@ namespace PinedaApp.Controllers
     public class PortfolioController : BaseApiController
     {
         private readonly IPortfolioService _portfolioService;
-        private readonly int _userId = 0;
+        private int newId = 0;
         public PortfolioController(IPortfolioService portfolioService)
         {
             _portfolioService = portfolioService;
@@ -22,7 +22,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<PortfolioResponse> responses = _portfolioService.GetPortfolios();
+                Response responses = _portfolioService.GetPortfolios();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -37,7 +37,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                PortfolioResponse response = _portfolioService.GetPortfolio(id);
+                Response response = _portfolioService.GetPortfolio(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -54,11 +54,11 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                PortfolioResponse response = _portfolioService.UpsertPortfolio(request);
+                Response response = _portfolioService.UpsertPortfolio(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetPortfolio),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -89,14 +89,14 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Delete Data");
                     return StatusCode(403, forbidden);
                 }
-                PortfolioResponse response = _portfolioService.UpsertPortfolio(request, id);
+                Response response = _portfolioService.UpsertPortfolio(request, out newId);
 
-                if (response.Id == id) return NoContent();
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetPortfolio),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }

@@ -10,6 +10,7 @@ namespace PinedaApp.Controllers
     public class AcademicController : BaseApiController
     {
         private readonly IAcademicServices _academicService;
+        private int newId;
         public AcademicController(IAcademicServices academicService)
         {
             _academicService = academicService;
@@ -20,7 +21,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<AcademicResponse> responses = _academicService.GetAcademics();
+                Response responses = _academicService.GetAcademics();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -35,7 +36,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                AcademicResponse response = _academicService.GetAcademic(id);
+                Response response = _academicService.GetAcademic(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -51,12 +52,12 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                AcademicResponse response = _academicService.UpsertAcademic(request);
+                Response response = _academicService.UpsertAcademic(request, out newId);
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetAcademic),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -87,14 +88,14 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                AcademicResponse updatedAcademic = _academicService.UpsertAcademic(request, id);
+                Response updatedAcademic = _academicService.UpsertAcademic(request, out newId, id);
 
-                if (updatedAcademic.Id == id) return NoContent();
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetAcademic),
-                    routeValues: new { id = updatedAcademic.Id },
+                    routeValues: new { id = newId },
                     value: updatedAcademic
                 );
             }

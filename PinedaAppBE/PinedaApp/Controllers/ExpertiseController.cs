@@ -10,6 +10,7 @@ namespace PinedaApp.Controllers
     public class ExpertiseController : BaseApiController
     {
         private readonly IExpertiseService _expertiseService;
+        private int newId = 0;
         public ExpertiseController(IExpertiseService expertiseService)
         {
             _expertiseService = expertiseService;
@@ -20,7 +21,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<ExpertiseResponse> responses = _expertiseService.GetExpertises();
+                Response responses = _expertiseService.GetExpertises();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -35,7 +36,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ExpertiseResponse response = _expertiseService.GetExpertise(id);
+                Response response = _expertiseService.GetExpertise(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -51,12 +52,12 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ExpertiseResponse response = _expertiseService.UpsertExpertise(request);
+                Response response = _expertiseService.UpsertExpertise(request, out newId);
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExpertise),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -87,14 +88,14 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                ExpertiseResponse updatedExpertise = _expertiseService.UpsertExpertise(request, id);
+                Response updatedExpertise = _expertiseService.UpsertExpertise(request, out newId, id);
 
-                if (updatedExpertise.Id == id) return NoContent();
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExpertise),
-                    routeValues: new { id = updatedExpertise.Id },
+                    routeValues: new { id = newId },
                     value: updatedExpertise
                 );
             }

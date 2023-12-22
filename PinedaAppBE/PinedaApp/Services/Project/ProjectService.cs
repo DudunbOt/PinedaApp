@@ -20,7 +20,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public ProjectResponse GetProject(int id)
+        public Response GetProject(int id)
         {
             Project project = _context.Project.FirstOrDefault(p => p.Id == id);
             if(project == null)
@@ -28,10 +28,11 @@ namespace PinedaApp.Services
                 throw new PinedaAppException($"Project  with id {id} not found", 404);
             }
 
-            return CreateProjectResponse(project);
+            ProjectResponse projectResponse = CreateProjectResponse(project);
+            return CreateResponse("success", ("project", projectResponse));
         }
 
-        public List<ProjectResponse> GetProject()
+        public Response GetProject()
         {
             List<Project> projects = _context.Project.ToList();
             if(projects == null || projects.Count == 0)
@@ -39,17 +40,17 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("No Data", 404);
             }
 
-            List<ProjectResponse> responses = new List<ProjectResponse>();
+            List<ProjectResponse> projectResponses = new List<ProjectResponse>();
             foreach (Project project in projects)
             {
                 ProjectResponse response = CreateProjectResponse(project);
-                responses.Add(response);
+                projectResponses.Add(response);
             }
 
-            return responses;
+            return CreateResponse("success", ("project", projectResponses));
         }
 
-        public ProjectResponse UpsertProject(ProjectRequest request, int? id = null)
+        public Response UpsertProject(ProjectRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No Request is Made", 400);
             Project project = BindProjectFromRequest(request);
@@ -75,7 +76,11 @@ namespace PinedaApp.Services
             }
 
             _context.SaveChanges();
-            return CreateProjectResponse(project);
+
+            newId = project.Id;
+
+            ProjectResponse projectResponse = CreateProjectResponse(project);
+            return CreateResponse("success", ("project", projectResponse));
         }
 
         private Project? BindProjectFromRequest(ProjectRequest request)

@@ -24,7 +24,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public ExpertiseResponse GetExpertise(int id)
+        public Response GetExpertise(int id)
         {
             Expertise expertise = _context.Expertise.FirstOrDefault(x => x.Id == id);
             if (expertise == null)
@@ -32,10 +32,11 @@ namespace PinedaApp.Services
                 throw new PinedaAppException($"Expertise with Id {id} not found");
             }
 
-            return CreateExpertiseResponse(expertise);
+            ExpertiseResponse expertiseResponse = CreateExpertiseResponse(expertise);
+            return CreateResponse("siccess", ("expertise", expertiseResponse));
         }
 
-        public List<ExpertiseResponse> GetExpertises()
+        public Response GetExpertises()
         {
             List<Expertise> expertises = _context.Expertise.ToList();
             if(expertises.Count == 0 || expertises == null)
@@ -50,10 +51,10 @@ namespace PinedaApp.Services
                 expertiseResponses.Add(response);
             }
 
-            return expertiseResponses;
+            return CreateResponse("siccess", ("expertise", expertiseResponses));
         }
 
-        public ExpertiseResponse UpsertExpertise(ExpertiseRequest request, int? id = null)
+        public Response UpsertExpertise(ExpertiseRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No Request has been made", 400);
             Expertise expertise = BindExpertiseFromRequest(request);
@@ -81,7 +82,11 @@ namespace PinedaApp.Services
             }
 
             _context.SaveChanges();
-            return CreateExpertiseResponse(expertise);
+            
+            newId = expertise.Id;
+
+            ExpertiseResponse expertiseResponse = CreateExpertiseResponse(expertise);
+            return CreateResponse("siccess", ("expertise", expertiseResponse));
         }
 
         private Expertise? BindExpertiseFromRequest(ExpertiseRequest request)

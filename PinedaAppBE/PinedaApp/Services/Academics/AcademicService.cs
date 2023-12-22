@@ -21,7 +21,7 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
         _context.SaveChanges();
     }
 
-    public AcademicResponse GetAcademic(int id)
+    public Response GetAcademic(int id)
     {
         Academic academic = _context.Academic.FirstOrDefault(a => a.Id == id);
         if (academic == null)
@@ -29,10 +29,11 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
             throw new PinedaAppException($"Academic with id: {id} Not Found", 400);
         }
 
-        return CreateAcademicResponse(academic);
+        AcademicResponse academicResponse = CreateAcademicResponse(academic);
+        return CreateResponse("success", ("academic", academicResponse));
     }
 
-    public List<AcademicResponse> GetAcademics()
+    public Response GetAcademics()
     {
         List<Academic> academics = _context.Academic.ToList();
         if (academics == null || academics.Count == 0)
@@ -40,18 +41,18 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
             throw new PinedaAppException("No Data", 404);
         }
 
-        List<AcademicResponse> responses = new List<AcademicResponse>();
+        List<AcademicResponse> academicResponses = new List<AcademicResponse>();
         foreach (Academic academic in academics)
         {
             AcademicResponse response = CreateAcademicResponse(academic);
-            responses.Add(response);
+            academicResponses.Add(response);
         }
 
-        return responses;
+        return CreateResponse("success", ("academic", academicResponses));
 
     }
 
-    public AcademicResponse UpsertAcademic(AcademicRequest request, int? id = null)
+    public Response UpsertAcademic(AcademicRequest request, out int newId, int? id = null)
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
@@ -80,7 +81,11 @@ public class AcademicService(PinedaAppContext context) : BaseService, IAcademicS
         }
        
         _context.SaveChanges();
-        return CreateAcademicResponse(academic);
+
+        newId = academic.Id;
+
+        AcademicResponse academicResponse = CreateAcademicResponse(academic);
+        return CreateResponse("success", ("academic", academicResponse));
     }
 
     private Academic? BindAcademicFromRequest(AcademicRequest request)

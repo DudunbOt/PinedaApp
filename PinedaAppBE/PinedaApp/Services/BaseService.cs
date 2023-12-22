@@ -1,5 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
+using PinedaApp.Contracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -32,8 +32,7 @@ namespace PinedaApp.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
-        public string UploadMediaFile(IFormFile file, string path1 = "", string path2 = "")
+        protected string UploadMediaFile(IFormFile file, string path1 = "", string path2 = "")
         {
             if (file == null) return null;
 
@@ -64,6 +63,18 @@ namespace PinedaApp.Services
             }
 
             return filename;
+        }
+
+        protected static Response CreateResponse(string status, params (string key, object data)[] dataItems)
+        {
+            Dictionary<string, object> responseData = new Dictionary<string, object>();
+
+            foreach (var dataItem in dataItems)
+            {
+                responseData.Add(dataItem.key, dataItem.data);
+            }
+
+            return new Response(status, responseData);
         }
     }
 }

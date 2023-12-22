@@ -10,6 +10,7 @@ namespace PinedaApp.Controllers
     public class ProjectController : BaseApiController
     {
         private readonly IProjectService _projectService;
+        private int newId = 0;
         public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
@@ -20,7 +21,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<ProjectResponse> responses = _projectService.GetProject();
+                Response responses = _projectService.GetProject();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -35,7 +36,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ProjectResponse response = _projectService.GetProject(id);
+                Response response = _projectService.GetProject(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -51,12 +52,12 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                ProjectResponse response = _projectService.UpsertProject(request);
+                Response response = _projectService.UpsertProject(request, out newId);
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetProject),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -87,14 +88,14 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                ProjectResponse updateProject = _projectService.UpsertProject(request, id);
+                Response updateProject = _projectService.UpsertProject(request, out newId, id);
 
-                if (updateProject.Id == id) return NoContent();
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetProject),
-                    routeValues: new { id = updateProject.Id },
+                    routeValues: new { id = newId },
                     value: updateProject
                 );
             }

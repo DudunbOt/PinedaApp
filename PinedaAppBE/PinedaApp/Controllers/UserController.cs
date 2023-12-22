@@ -11,6 +11,7 @@ namespace PinedaApp.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUserService userService;
+        private int newId = 0;
         public UserController(IUserService _userService)
         {
             userService = _userService;
@@ -21,7 +22,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                List<UserResponse> responses = userService.GetUsers();
+                Response responses = userService.GetUsers();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -36,7 +37,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                LoginResponse token = userService.GetToken(request.UserName, request.Password);
+                Response token = userService.GetToken(request.UserName, request.Password);
                 return Ok(token);
             }
             catch (PinedaAppException ex)
@@ -52,12 +53,12 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                UserResponse response = userService.UpsertUser(request);
+                Response response = userService.UpsertUser(request, out newId);
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetUser),
-                    routeValues: new { id = response.Id },
+                    routeValues: new { id = newId },
                     value: response
                 );
             }
@@ -82,7 +83,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                UserResponse user = userService.GetUser(id);
+                Response user = userService.GetUser(id);
 
                 return Ok(user);
             }
@@ -107,14 +108,14 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                UserResponse updatedUser = userService.UpsertUser(request, id);
+                Response updatedUser = userService.UpsertUser(request, out newId, id);
 
-                if (updatedUser.Id == id) return NoContent();
+                if (newId == id) return NoContent();
 
                 return CreatedAtAction
                 (
                     actionName: nameof(GetUser),
-                    routeValues: new { id = updatedUser.Id },
+                    routeValues: new { id = newId },
                     value: updatedUser
                 );
             }

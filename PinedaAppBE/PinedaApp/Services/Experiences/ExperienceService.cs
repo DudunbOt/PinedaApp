@@ -25,7 +25,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public ExperienceResponse GetExperience(int id)
+        public Response GetExperience(int id)
         {
             Experience experience = _context.Experience.FirstOrDefault(e => e.Id == id);
             if (experience == null)
@@ -33,10 +33,11 @@ namespace PinedaApp.Services
                 throw new PinedaAppException($"Experience with id: {id} not found", 404);
             }
 
-            return CreateExperienceResponse(experience);
+            ExperienceResponse experienceResponse = CreateExperienceResponse(experience);
+            return CreateResponse("success", ("experience", experienceResponse));
         }
 
-        public List<ExperienceResponse> GetExperiences()
+        public Response GetExperiences()
         {
             List<Experience> experiences = _context.Experience.ToList();
             if (experiences == null || experiences.Count == 0)
@@ -51,10 +52,10 @@ namespace PinedaApp.Services
                 experienceResponses.Add(response);
             }
 
-            return experienceResponses;
+            return CreateResponse("success", ("experience", experienceResponses));
         }
 
-        public ExperienceResponse UpsertExperience(ExperienceRequest request, int? id = null)
+        public Response UpsertExperience(ExperienceRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No request is made", 400);
             Experience experience = BindExperienceFromRequest(request);
@@ -83,7 +84,11 @@ namespace PinedaApp.Services
             }
 
             _context.SaveChanges();
-            return CreateExperienceResponse(experience);
+
+            newId = experience.Id;
+
+            ExperienceResponse experienceResponse = CreateExperienceResponse(experience);
+            return CreateResponse("success", ("experience", experienceResponse));
         }
 
         private Experience? BindExperienceFromRequest(ExperienceRequest request)

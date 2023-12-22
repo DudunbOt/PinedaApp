@@ -21,7 +21,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public PortfolioResponse GetPortfolio(int id)
+        public Response GetPortfolio(int id)
         {
             Portfolio portfolio = _context.Portfolio.FirstOrDefault(p => p.Id == id);
             if (portfolio == null)
@@ -29,10 +29,11 @@ namespace PinedaApp.Services
                 throw new PinedaAppException($"Portfolio with Id: {id} not found", 404);
             }
 
-            return CreatePortfolioResponse(portfolio);
+            PortfolioResponse portfolioResponse = CreatePortfolioResponse(portfolio);
+            return CreateResponse("success", ("portfolio", portfolioResponse));
         }
 
-        public List<PortfolioResponse> GetPortfolios()
+        public Response GetPortfolios()
         {
             List<Portfolio> portfolios = _context.Portfolio.ToList();
             if (portfolios == null || portfolios.Count == 0)
@@ -47,10 +48,10 @@ namespace PinedaApp.Services
                 responses.Add(response);
             }
 
-            return responses;
+            return CreateResponse("success", ("portfolio", responses));
         }
 
-        public PortfolioResponse UpsertPortfolio(PortfolioRequest request, int? id = null)
+        public Response UpsertPortfolio(PortfolioRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No Request is Made", 400);
             Portfolio portfolio = BindPortfolioFromRequest(request);
@@ -80,7 +81,11 @@ namespace PinedaApp.Services
             }
            
             _context.SaveChanges();
-            return CreatePortfolioResponse(portfolio);
+            
+            newId = portfolio.Id;
+
+            PortfolioResponse portfolioResponse = CreatePortfolioResponse(portfolio);
+            return CreateResponse("success", ("portfolio", portfolioResponse));
         }
 
         private Portfolio? BindPortfolioFromRequest(PortfolioRequest request)
