@@ -125,7 +125,6 @@ namespace PinedaApp.Services
             ProjectResponse response = new ProjectResponse
             (
                 project.Id,
-                project.ExperienceId,
                 project.ProjectName,
                 project.ProjectDescription,
                 project.CreatedAt,

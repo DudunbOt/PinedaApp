@@ -162,7 +162,6 @@ public class AcademicService: ServiceBase, IAcademicServices
         AcademicResponse response = new AcademicResponse
         (
             Academic.Id,
-            Academic.UserId,
             Academic.SchoolName,
             Academic.Degree,
             Academic.StartDate,

@@ -15,6 +15,7 @@ namespace PinedaApp.Configurations
         public DbSet<Expertise> Expertise { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<TransactionCategory> TransactionCategory { get; set; }
+        public DbSet<Budget> Budget { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -62,16 +63,28 @@ namespace PinedaApp.Configurations
                 .Property(e => e.EndDate)
                 .IsRequired(false);
 
+            modelBuilder.Entity<Academic>()
+                .Property(a => a.EndDate)
+                .IsRequired(false);
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Transactions)
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId);
 
+            modelBuilder.Entity<Budget>()
+                .HasMany(b => b.Transactions)
+                .WithOne(t => t.Budget)
+                .HasForeignKey(t => t.BudgetId)
+
             modelBuilder.Entity<TransactionCategory>()
                 .HasMany(tc => tc.Transactions)
                 .WithOne(t => t.Category)
                 .HasForeignKey(t => t.CategoryId);
-            
+
+            modelBuilder.Entity<Transaction>()
+                .Property(t => t.BudgetId)
+                .IsRequired(false);   
         }
     }
 }

@@ -3,7 +3,6 @@
     public record ExperienceResponse
     (
         int Id,
-        int UserId,
         string CompanyName,
         string Position,
         string ShortDesc,

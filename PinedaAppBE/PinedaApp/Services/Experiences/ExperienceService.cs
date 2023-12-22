@@ -158,7 +158,6 @@ namespace PinedaApp.Services
             ExperienceResponse response = new ExperienceResponse
             (
                 experience.Id,
-                experience.UserId,
                 experience.CompanyName,
                 experience.Position,
                 experience.ShortDesc,

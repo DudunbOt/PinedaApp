@@ -3,7 +3,6 @@
     public record AcademicResponse
     (
         int Id,
-        int UserId,
         string SchoolName,
         string Degree,
         DateTime StartDate,

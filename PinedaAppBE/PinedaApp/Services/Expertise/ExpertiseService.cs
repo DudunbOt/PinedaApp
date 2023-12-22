@@ -135,7 +135,6 @@ namespace PinedaApp.Services
             ExpertiseResponse response = new ExpertiseResponse
             (
                 Expertise.Id,
-                Expertise.UserId,
                 Expertise.Skills,
                 Expertise.CreatedAt,
                 Expertise.LastUpdatedAt

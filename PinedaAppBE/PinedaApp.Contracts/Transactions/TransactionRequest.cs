@@ -4,6 +4,8 @@
     (
         string Name,
         double Value,
-        int CategoryId
+        int CategoryId,
+        int UserId,
+        int? BudgetId
     );
 }

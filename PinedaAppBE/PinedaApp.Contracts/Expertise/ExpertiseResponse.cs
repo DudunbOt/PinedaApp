@@ -9,7 +9,6 @@ namespace PinedaApp.Contracts
    public record ExpertiseResponse
    (
        int Id,
-       int UserId,
        string Skills,
        DateTime CreatedAt,
        DateTime LastUpdatedAt

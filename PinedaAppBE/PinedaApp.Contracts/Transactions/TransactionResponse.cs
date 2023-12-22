@@ -6,6 +6,7 @@
         string Name,
         double Value,
         string Category,
-        string Type
+        DateTime CreatedAt,
+        DateTime UpdatedAt
     );
 }

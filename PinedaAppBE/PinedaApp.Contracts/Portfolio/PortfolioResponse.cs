@@ -3,7 +3,6 @@
     public record PortfolioResponse
     (
         int Id,
-        int UserId,
         string Name,
         string Description,
         string ImageFile,

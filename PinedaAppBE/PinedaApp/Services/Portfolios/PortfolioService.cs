@@ -153,7 +153,6 @@ namespace PinedaApp.Services
             PortfolioResponse response = new PortfolioResponse
             (
                 portfolio.Id,
-                portfolio.UserId,
                 portfolio.Name,
                 portfolio.Description,
                 portfolio.ImageFilePath,

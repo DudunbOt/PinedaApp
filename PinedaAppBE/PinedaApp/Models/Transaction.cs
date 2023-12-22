@@ -12,10 +12,16 @@ namespace PinedaApp.Models
         
         public string Name { get; set; }
         public double Value { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
 
         public int CategoryId { get; set; }
         [JsonIgnore]
         public virtual TransactionCategory Category { get; set; }
+
+        public int? BudgetId { get; set; }
+        [JsonIgnore]
+        public virtual Budget Budget { get; set; }
 
         public int UserId { get; set; }
         [JsonIgnore]
