@@ -6,10 +6,8 @@ using PinedaApp.Models.Errors;
 
 namespace PinedaApp.Services
 {
-    public class TransactionService : ServiceBase, ITransactionService
+    public class TransactionService(PinedaAppContext context) : ServiceBase(context), ITransactionService
     {
-        public TransactionService(PinedaAppContext context) : base(context) { }
-
         public void DeleteTransaction(int id)
         {
             Transaction transaction = _context.Transaction.FirstOrDefault(x => x.Id == id) ?? throw new PinedaAppException($"Transaction with id {id} not found");
