@@ -25,7 +25,7 @@ namespace PinedaApp.Models
             {
                 if (Enum.TryParse(Type, true, out TransactionType result)) return result;
 
-                throw new PinedaAppException("Invalid Transaction Type");
+                throw new PinedaAppException("Invalid Transaction Type", 404);
             }
         }
     }
@@ -33,6 +33,7 @@ namespace PinedaApp.Models
     public enum TransactionType
     {
         Income,
-        Outcome
+        Outcome,
+        Saving
     }
 }

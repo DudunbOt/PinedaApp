@@ -2,7 +2,7 @@
 
 namespace PinedaApp.Services;
 
-public interface IUserService
+public interface IUserService : IServiceBase
 {
     Response GetUsers();
     Response GetUser(int id);

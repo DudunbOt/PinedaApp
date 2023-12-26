@@ -6,7 +6,7 @@
         string SchoolName,
         string Degree,
         DateTime StartDate,
-        DateTime EndDate,
+        DateTime? EndDate,
         DateTime CreatedAt,
         DateTime LastUpdatedAt
     );

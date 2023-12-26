@@ -14,6 +14,10 @@ namespace PinedaApp.Configurations
                 .ForMember(dest => dest.Projects, opt => opt.MapFrom(src => src.Project));
             CreateMap<Project, ProjectDto>();
             CreateMap<Expertise, ExpertiseDto>();
+            CreateMap<Transaction, TransactionDto>();
+            CreateMap<User, UserDto>();
+            CreateMap<TransactionCategory, TransactionCategoryDto>();
+            CreateMap<Budget, BudgetDto>();
         }
     }
 }

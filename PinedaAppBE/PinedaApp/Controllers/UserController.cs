@@ -4,7 +4,6 @@ using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models.Errors;
 using PinedaApp.Services;
-using System.Security.Claims;
 
 namespace PinedaApp.Controllers
 {

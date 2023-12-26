@@ -75,7 +75,7 @@ namespace PinedaApp.Configurations
             modelBuilder.Entity<Budget>()
                 .HasMany(b => b.Transactions)
                 .WithOne(t => t.Budget)
-                .HasForeignKey(t => t.BudgetId)
+                .HasForeignKey(t => t.BudgetId);
 
             modelBuilder.Entity<TransactionCategory>()
                 .HasMany(tc => tc.Transactions)

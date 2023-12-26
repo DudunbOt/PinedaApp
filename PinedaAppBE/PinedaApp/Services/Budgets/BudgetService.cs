@@ -13,6 +13,12 @@ namespace PinedaApp.Services
         public void DeleteBudget(int id)
         {
             Budget budget = _context.Budget.FirstOrDefault(b => b.Id == id) ?? throw new PinedaAppException($"Budget with id {id} not found", 404);
+            List<Transaction> transactions = _context.Transaction.Where(t => t.BudgetId == id).ToList();
+
+            foreach (Transaction transaction in transactions)
+            {
+                _context.Transaction.Remove(transaction);
+            }
 
             _context.Budget.Remove(budget);
             _context.SaveChanges();
@@ -83,6 +89,7 @@ namespace PinedaApp.Services
 
             Budget budget = new Budget()
             {
+                UserId = request.UserId,
                 Name = request.Name,
                 Goal = request.Goal,
                 Current = request.Current,
@@ -112,9 +119,9 @@ namespace PinedaApp.Services
             {
                 validationErrors.AddError("Goal can't be less or equal 0");
             }
-            if (request.Current <= 0)
+            if (request.Current < 0)
             {
-                validationErrors.AddError("Current can't be less or equal 0");
+                validationErrors.AddError("Current can't be less than 0");
             }
 
             return validationErrors;
@@ -123,7 +130,7 @@ namespace PinedaApp.Services
         private BudgetResponse CreateBudgetResponse(Budget budget)
         {
             IEnumerable<TransactionDto> transactions = _context.Transaction
-            .Where(a => a.UserId == budget.UserId)
+            .Where(a => a.UserId == budget.UserId && a.BudgetId == budget.Id)
             .ProjectTo<TransactionDto>(_mapper.ConfigurationProvider);
 
             BudgetResponse response = new

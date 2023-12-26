@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using PinedaApp.Configurations;
 using PinedaApp.Contracts;
 using PinedaApp.Models;
@@ -46,6 +47,7 @@ namespace PinedaApp.Services
         {
             Transaction transaction = BindTransactionFromRequest(request);
             Transaction toUpdate = null;
+            double budgetValue;
 
             if (id != null)
             {
@@ -54,10 +56,12 @@ namespace PinedaApp.Services
 
             if (id == null && toUpdate == null) 
             {
-               _context.Transaction.Add(transaction); 
+               _context.Transaction.Add(transaction);
+                budgetValue = transaction.Value;
             }
             else
             {
+                budgetValue = transaction.Value - toUpdate.Value;
                 toUpdate.Name = transaction.Name;
                 toUpdate.Value = transaction.Value;
                 toUpdate.BudgetId = transaction.BudgetId;
@@ -68,6 +72,16 @@ namespace PinedaApp.Services
 
                 transaction = toUpdate;
             }
+
+            if (transaction.BudgetId != null)
+            {
+                Budget budgetUpdate = _context.Budget.FirstOrDefault(b => b.Id == transaction.BudgetId) ?? throw new PinedaAppException($"Budget with id {transaction.BudgetId} not found");
+                budgetUpdate.LastUpdatedAt = DateTime.Now;
+                budgetUpdate.Current += budgetValue;
+                _context.Budget.Update(budgetUpdate);
+            }
+
+            _context.SaveChanges();
 
             newId = transaction.Id;
 
@@ -83,7 +97,7 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
             }
 
-            Transaction transaction = new Transaction()
+            Transaction transaction = new()
             {
                 UserId = request.UserId,
                 Name = request.Name,
@@ -93,6 +107,8 @@ namespace PinedaApp.Services
                 CreatedAt = DateTime.Now,
                 LastUpdatedAt = DateTime.Now
             };
+
+            _context.Entry(transaction).Reference(t => t.Category).Load();
 
             return transaction;
         }
@@ -119,6 +135,16 @@ namespace PinedaApp.Services
             if(request.CategoryId == 0)
             {
                 validationErrors.AddError("Category is empty");
+            }
+            if(request.CategoryId != 0)
+            {
+                bool tcExist = _context.TransactionCategory.Any(tc => tc.Id ==  request.CategoryId);
+                if (!tcExist) validationErrors.AddError($"Transaction Cateogry with id {request.CategoryId} not found");
+            }
+            if(request.BudgetId != 0)
+            {
+                bool budgetExist = _context.Budget.Any(b => b.Id == request.BudgetId);
+                if (!budgetExist) validationErrors.AddError($"Budget with id {request.BudgetId} not found");
             }
 
             return validationErrors;
