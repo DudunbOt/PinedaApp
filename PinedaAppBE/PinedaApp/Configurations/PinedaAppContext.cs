@@ -84,7 +84,12 @@ namespace PinedaApp.Configurations
 
             modelBuilder.Entity<Transaction>()
                 .Property(t => t.BudgetId)
-                .IsRequired(false);   
+                .IsRequired(false);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Budget)
+                .WithOne(b => b.User)
+                .HasForeignKey<Budget>(b => b.UserId);
         }
     }
 }
