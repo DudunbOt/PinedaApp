@@ -10,6 +10,7 @@
                 class="mt-2"
                 :src="UserProfile.profilePicture"
                 width="200"
+                rounded="circle"
                 fluid
                 block
               ></b-img>
@@ -104,7 +105,7 @@ export default {
   methods: {
     async GetMyProfile() {
       this.$axios
-        .get("/user/1003")
+        .get("/user/1")
         .then((response) => {
           this.bindData(response.data);
         })

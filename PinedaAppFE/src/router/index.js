@@ -1,6 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import AboutView from "../views/AboutView.vue";
+import LoginView from "../views/LoginView.vue";
+// import ProfileView from "../views/ProfileView.vue";
 
 Vue.use(VueRouter);
 
@@ -10,21 +13,50 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
+      name: "Login",
+      component: LoginView,
+      meta: {
+        title: "Welcome",
+      },
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          next("/home");
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: "/home",
       name: "Home",
       component: HomeView,
       meta: {
-        title: "Pineda App",
+        title: "HomeView",
+      },
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          next("/");
+        } else {
+          next();
+        }
       },
     },
     {
       path: "/about",
       name: "About",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
+      component: AboutView,
       meta: {
         title: "About Me",
+      },
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          next("/");
+        } else {
+          next();
+        }
       },
     },
     {
