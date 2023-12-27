@@ -12,7 +12,6 @@ namespace PinedaApp.Configurations
         public DbSet<Portfolio> Portfolio { get; set; }
         public DbSet<Experience> Experience { get; set; }
         public DbSet<Project> Project { get; set; }
-        public DbSet<Expertise> Expertise { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<TransactionCategory> TransactionCategory { get; set; }
         public DbSet<Budget> Budget { get; set; }
@@ -48,11 +47,6 @@ namespace PinedaApp.Configurations
                 .HasMany(p => p.Portfolios)
                 .WithOne(f => f.User)
                 .HasForeignKey(f => f.UserId);
-
-            modelBuilder.Entity<User>()
-                .HasOne(p => p.Expertise)
-                .WithOne(f => f.User)
-                .HasForeignKey<Expertise>(f => f.UserId);
 
             modelBuilder.Entity<Experience>()
                 .HasMany(e => e.Project)

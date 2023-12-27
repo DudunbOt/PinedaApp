@@ -18,6 +18,7 @@ namespace PinedaApp.Models
         public string? Address { get; set; }
         public string? ProfilePicture { get; set; }
         public string? Occupation { get; set; }
+        public string? Expertise { get; set; }
         public Role? UserRole { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
@@ -25,7 +26,6 @@ namespace PinedaApp.Models
         public virtual ICollection<Academic>? Academics { get; set; }
         public virtual ICollection<Experience>? Experiences { get; set; }
         public virtual ICollection<Portfolio>? Portfolios { get; set; }
-        public virtual Expertise? Expertise { get; set; }
         public virtual ICollection<Transaction>? Transactions { get; set; }
         public virtual Budget? Budget { get; set; }
     }

@@ -206,15 +206,10 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             .Where(a => a.UserId == user.Id)
             .ProjectTo<ExperienceDto>(_mapper.ConfigurationProvider);
 
-        IEnumerable<ExpertiseDto> expertises = _context.Expertise
-            .Where(a => a.UserId == user.Id)
-            .ProjectTo<ExpertiseDto>(_mapper.ConfigurationProvider);
+        List<string> expertise = [];
+        if (string.IsNullOrEmpty(user.Expertise)) expertise = user.Expertise.Split(',').ToList();
 
-        ExpertiseDto expertise = expertises.FirstOrDefault();
-        List<string> stringList = expertise.Skills.Split(',').ToList();
-
-        UserResponse response = new UserResponse
-        (
+        UserResponse response = new (
             user.Id,
             user.UserName,
             user.FirstName,
@@ -229,7 +224,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             academics.Cast<object>().ToList(),
             experiences.Cast<object>().ToList(),
             portofolios.Cast<object>().ToList(),
-            stringList,
+            expertise,
             user.CreatedAt,
             user.LastUpdatedAt
         );
