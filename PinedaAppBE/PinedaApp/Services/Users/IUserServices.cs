@@ -4,9 +4,9 @@ namespace PinedaApp.Services;
 
 public interface IUserService : IServiceBase
 {
-    Response GetUsers();
-    Response GetUser(int id);
-    Response GetToken(string username, string password);
-    Response UpsertUser(UserRequest user, out int newId, int? id = null);
+    List<UserResponse> GetUsers();
+    UserResponse GetUser(int id);
+    LoginResponse GetToken(string username, string password);
+    UserResponse UpsertUser(UserRequest user, out int newId, int? id = null);
     void DeleteUser(int id);
 }

@@ -14,7 +14,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetTransactions();
+                List<TransactionResponse> responses = _service.GetTransactions();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -29,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetTransaction(id);
+                TransactionResponse response = _service.GetTransaction(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -45,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertTransaction(request, out newId);
+                TransactionResponse response = _service.UpsertTransaction(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -81,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updatedTransaction = _service.UpsertTransaction(request, out newId, id);
+                TransactionResponse updatedTransaction = _service.UpsertTransaction(request, out newId, id);
 
                 if (newId == id) return NoContent();
 

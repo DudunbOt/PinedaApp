@@ -14,7 +14,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetAcademics();
+                List<AcademicResponse> responses = _service.GetAcademics();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -29,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetAcademic(id);
+                AcademicResponse response = _service.GetAcademic(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -45,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertAcademic(request, out newId);
+                AcademicResponse response = _service.UpsertAcademic(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -81,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updatedAcademic = _service.UpsertAcademic(request, out newId, id);
+                AcademicResponse updatedAcademic = _service.UpsertAcademic(request, out newId, id);
 
                 if (newId == id) return NoContent();
 

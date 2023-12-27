@@ -10,11 +10,11 @@ namespace PinedaApp.Controllers
     public class ProjectController(IProjectService projectService) : BaseApiController<IProjectService>(projectService)
     {
         [HttpGet]
-        public IActionResult GetProject()
+        public IActionResult GetProjects()
         {
             try
             {
-                Response responses = _service.GetProject();
+                List<ProjectResponse> responses = _service.GetProjects();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -29,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetProject(id);
+                ProjectResponse response = _service.GetProject(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -45,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertProject(request, out newId);
+                ProjectResponse response = _service.UpsertProject(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -81,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updateProject = _service.UpsertProject(request, out newId, id);
+                ProjectResponse updateProject = _service.UpsertProject(request, out newId, id);
 
                 if (newId == id) return NoContent();
 

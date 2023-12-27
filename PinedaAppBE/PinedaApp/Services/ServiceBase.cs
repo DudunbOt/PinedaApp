@@ -87,17 +87,5 @@ namespace PinedaApp.Services
 
             return filename;
         }
-
-        protected static Response CreateResponse(string status, params (string key, object data)[] dataItems)
-        {
-            Dictionary<string, object> responseData = new Dictionary<string, object>();
-
-            foreach (var dataItem in dataItems)
-            {
-                responseData.Add(dataItem.key, dataItem.data);
-            }
-
-            return new Response(status, responseData);
-        }
     }
 }

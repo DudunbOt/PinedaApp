@@ -15,7 +15,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetPortfolios();
+                List<PortfolioResponse> responses = _service.GetPortfolios();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -30,7 +30,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetPortfolio(id);
+                PortfolioResponse response = _service.GetPortfolio(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -47,7 +47,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertPortfolio(request, out newId);
+                PortfolioResponse response = _service.UpsertPortfolio(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetPortfolio),
@@ -82,7 +82,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Delete Data");
                     return StatusCode(403, forbidden);
                 }
-                Response response = _service.UpsertPortfolio(request, out newId);
+                PortfolioResponse response = _service.UpsertPortfolio(request, out newId);
 
                 if (newId == id) return NoContent();
 

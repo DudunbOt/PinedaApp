@@ -14,7 +14,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetBudgets();
+                List<BudgetResponse> responses = _service.GetBudgets();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -29,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetBudget(id);
+                BudgetResponse response = _service.GetBudget(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -45,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertBudget(request, out newId);
+                BudgetResponse response = _service.UpsertBudget(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -81,7 +81,7 @@ namespace PinedaApp.Controllers
                     ErrorResponse forbidden = new("Not Allowed to Update Data");
                     return StatusCode(403, forbidden);
                 }
-                Response updatedBudget = _service.UpsertBudget(request, out newId, id);
+                BudgetResponse updatedBudget = _service.UpsertBudget(request, out newId, id);
 
                 if (newId == id) return NoContent();
 

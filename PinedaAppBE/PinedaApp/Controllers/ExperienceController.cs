@@ -15,7 +15,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetExperiences();
+                List<ExperienceResponse> responses = _service.GetExperiences();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -30,7 +30,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.GetExperience(id);
+                ExperienceResponse response = _service.GetExperience(id);
                 return Ok(response);
             }
             catch (PinedaAppException ex)
@@ -46,7 +46,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertExperience(request, out newId);
+                ExperienceResponse response = _service.UpsertExperience(request, out newId);
                 return CreatedAtAction
                 (
                     actionName: nameof(GetExperience),
@@ -82,7 +82,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                Response response = _service.UpsertExperience(request, out newId, id);
+                ExperienceResponse response = _service.UpsertExperience(request, out newId, id);
                 if (newId == id) return NoContent();
 
                 return CreatedAtAction

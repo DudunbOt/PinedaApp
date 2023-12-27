@@ -4,8 +4,8 @@ namespace PinedaApp.Services;
 
 public interface IAcademicServices : IServiceBase
 {
-    Response GetAcademics();
-    Response GetAcademic(int id);
-    Response UpsertAcademic(AcademicRequest request, out int newId, int? id = null);
+    List<AcademicResponse> GetAcademics();
+    AcademicResponse GetAcademic(int id);
+    AcademicResponse UpsertAcademic(AcademicRequest request, out int newId, int? id = null);
     void DeleteAcademic(int id);
 }

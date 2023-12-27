@@ -19,7 +19,7 @@ public class AcademicService(PinedaAppContext context) : ServiceBase(context), I
         _context.SaveChanges();
     }
 
-    public Response GetAcademic(int id)
+    public AcademicResponse GetAcademic(int id)
     {
         Academic academic = _context.Academic.FirstOrDefault(a => a.Id == id);
         if (academic == null)
@@ -27,11 +27,10 @@ public class AcademicService(PinedaAppContext context) : ServiceBase(context), I
             throw new PinedaAppException($"Academic with id: {id} Not Found", 400);
         }
 
-        AcademicResponse academicResponse = CreateAcademicResponse(academic);
-        return CreateResponse("success", ("academic", academicResponse));
+        return CreateAcademicResponse(academic);    
     }
 
-    public Response GetAcademics()
+    public List<AcademicResponse> GetAcademics()
     {
         List<Academic> academics = _context.Academic.ToList();
         if (academics == null || academics.Count == 0)
@@ -46,11 +45,11 @@ public class AcademicService(PinedaAppContext context) : ServiceBase(context), I
             academicResponses.Add(response);
         }
 
-        return CreateResponse("success", ("academic", academicResponses));
+        return academicResponses;
 
     }
 
-    public Response UpsertAcademic(AcademicRequest request, out int newId, int? id = null)
+    public AcademicResponse UpsertAcademic(AcademicRequest request, out int newId, int? id = null)
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
@@ -82,8 +81,7 @@ public class AcademicService(PinedaAppContext context) : ServiceBase(context), I
 
         newId = academic.Id;
 
-        AcademicResponse academicResponse = CreateAcademicResponse(academic);
-        return CreateResponse("success", ("academic", academicResponse));
+        return CreateAcademicResponse(academic);
     }
 
     private Academic? BindAcademicFromRequest(AcademicRequest request)

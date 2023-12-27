@@ -14,7 +14,7 @@ namespace PinedaApp.Services;
 
 public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppSettings> appSettings) : ServiceBase(context, mapper, appSettings), IUserService
 {
-    public Response GetToken(string username, string password)
+    public LoginResponse GetToken(string username, string password)
     {
         User user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == HashPassword(password));
         if (user == null)
@@ -31,10 +31,10 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
 
         string token = GenerateToken(_appSettings.SecretKey, _appSettings.Issuer, _appSettings.Audience, claims);
 
-        return CreateResponse("success", ("token", token));
+        return new LoginResponse(token);
     }
 
-    public Response GetUsers()
+    public List<UserResponse> GetUsers()
     {
         List<User> users = _context.Users.ToList();
         if (users == null || users.Count == 0)
@@ -49,7 +49,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             responses.Add(response);
         }
 
-        return CreateResponse("success", ("user", responses));
+        return responses;
     }
 
     public void DeleteUser(int id)
@@ -64,7 +64,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
         _context.SaveChanges();
     }
 
-    public Response GetUser(int id)
+    public UserResponse GetUser(int id)
     {
         User user = _context.Users.FirstOrDefault(x => x.Id == id);
         if (user == null)
@@ -72,11 +72,10 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             throw new PinedaAppException($"User with id {id} not found", 404);
         }
 
-        UserResponse userResponse = CreateUserResponse(user);
-        return CreateResponse("success", ("user", userResponse));
+        return CreateUserResponse(user);
     }
 
-    public Response UpsertUser(UserRequest request, out int newId, int? id = null)
+    public UserResponse UpsertUser(UserRequest request, out int newId, int? id = null)
     {
         if (request == null) throw new PinedaAppException("No Request is made", 400);
 
@@ -119,8 +118,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
 
         newId = user.Id;
 
-        UserResponse userResponse = CreateUserResponse(user);
-        return CreateResponse("success", ("user", userResponse));
+        return CreateUserResponse(user);
     }
 
     private User? BindUserFromRequest(UserRequest request)

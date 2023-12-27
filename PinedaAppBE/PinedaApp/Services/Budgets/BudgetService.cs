@@ -24,15 +24,14 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public Response GetBudget(int id)
+        public BudgetResponse GetBudget(int id)
         {
             Budget budget = _context.Budget.FirstOrDefault(b => b.Id == id) ?? throw new PinedaAppException($"Budget with id {id} not found", 404);
 
-            BudgetResponse response = CreateBudgetResponse(budget);
-            return CreateResponse("success", ("budget", response));
+            return CreateBudgetResponse(budget);
         }
 
-        public Response GetBudgets()
+        public List<BudgetResponse> GetBudgets()
         {
             List<Budget> budgets = _context.Budget.ToList();
             if(budgets == null || budgets.Count == 0)
@@ -47,10 +46,10 @@ namespace PinedaApp.Services
                 responses.Add(response);
             }
 
-            return CreateResponse("success", ("budget", responses));
+            return responses;
         }
 
-        public Response UpsertBudget(BudgetRequest request, out int newId, int? id = null)
+        public BudgetResponse UpsertBudget(BudgetRequest request, out int newId, int? id = null)
         {
             Budget budget = BindBudgetFromRequest(request);
             Budget toUpdate = null;
@@ -75,8 +74,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
             newId = budget.Id;
 
-            BudgetResponse response = CreateBudgetResponse(budget);
-            return CreateResponse("success", ("budget", response));
+            return CreateBudgetResponse(budget);
         }
 
         private Budget? BindBudgetFromRequest(BudgetRequest request)

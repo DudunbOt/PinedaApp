@@ -14,7 +14,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response responses = _service.GetUsers();
+                List<UserResponse> responses = _service.GetUsers();
                 return Ok(responses);
             }
             catch (PinedaAppException ex)
@@ -29,7 +29,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response token = _service.GetToken(request.UserName, request.Password);
+                LoginResponse token = _service.GetToken(request.UserName, request.Password);
                 return Ok(token);
             }
             catch (PinedaAppException ex)
@@ -45,7 +45,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response response = _service.UpsertUser(request, out newId);
+                UserResponse response = _service.UpsertUser(request, out newId);
 
                 return CreatedAtAction
                 (
@@ -75,7 +75,7 @@ namespace PinedaApp.Controllers
         {
             try
             {
-                Response user = _service.GetUser(id);
+                UserResponse user = _service.GetUser(id);
 
                 return Ok(user);
             }
@@ -100,7 +100,7 @@ namespace PinedaApp.Controllers
                     return StatusCode(403, forbidden);
                 }
 
-                Response updatedUser = _service.UpsertUser(request, out newId, id);
+                UserResponse updatedUser = _service.UpsertUser(request, out newId, id);
 
                 if (newId == id) return NoContent();
 

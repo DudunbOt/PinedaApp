@@ -22,19 +22,13 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public Response GetExperience(int id)
+        public ExperienceResponse GetExperience(int id)
         {
-            Experience experience = _context.Experience.FirstOrDefault(e => e.Id == id);
-            if (experience == null)
-            {
-                throw new PinedaAppException($"Experience with id: {id} not found", 404);
-            }
-
-            ExperienceResponse experienceResponse = CreateExperienceResponse(experience);
-            return CreateResponse("success", ("experience", experienceResponse));
+            Experience experience = _context.Experience.FirstOrDefault(e => e.Id == id) ?? throw new PinedaAppException($"Experience with id: {id} not found", 404);
+            return CreateExperienceResponse(experience);
         }
 
-        public Response GetExperiences()
+        public List<ExperienceResponse> GetExperiences()
         {
             List<Experience> experiences = _context.Experience.ToList();
             if (experiences == null || experiences.Count == 0)
@@ -49,10 +43,10 @@ namespace PinedaApp.Services
                 experienceResponses.Add(response);
             }
 
-            return CreateResponse("success", ("experience", experienceResponses));
+            return experienceResponses;
         }
 
-        public Response UpsertExperience(ExperienceRequest request, out int newId, int? id = null)
+        public ExperienceResponse UpsertExperience(ExperienceRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No request is made", 400);
             Experience experience = BindExperienceFromRequest(request);
@@ -84,8 +78,7 @@ namespace PinedaApp.Services
 
             newId = experience.Id;
 
-            ExperienceResponse experienceResponse = CreateExperienceResponse(experience);
-            return CreateResponse("success", ("experience", experienceResponse));
+            return CreateExperienceResponse(experience);
         }
 
         private Experience? BindExperienceFromRequest(ExperienceRequest request)

@@ -2,6 +2,7 @@
 using PinedaApp.Contracts;
 using PinedaApp.Models;
 using PinedaApp.Models.Errors;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PinedaApp.Services
 {
@@ -14,7 +15,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public Response GetProject(int id)
+        public ProjectResponse GetProject(int id)
         {
             Project project = _context.Project.FirstOrDefault(p => p.Id == id);
             if(project == null)
@@ -22,11 +23,10 @@ namespace PinedaApp.Services
                 throw new PinedaAppException($"Project  with id {id} not found", 404);
             }
 
-            ProjectResponse projectResponse = CreateProjectResponse(project);
-            return CreateResponse("success", ("project", projectResponse));
+            return CreateProjectResponse(project);
         }
 
-        public Response GetProject()
+        public List<ProjectResponse> GetProjects()
         {
             List<Project> projects = _context.Project.ToList();
             if(projects == null || projects.Count == 0)
@@ -41,10 +41,10 @@ namespace PinedaApp.Services
                 projectResponses.Add(response);
             }
 
-            return CreateResponse("success", ("project", projectResponses));
+            return projectResponses;
         }
 
-        public Response UpsertProject(ProjectRequest request, out int newId, int? id = null)
+        public ProjectResponse UpsertProject(ProjectRequest request, out int newId, int? id = null)
         {
             if (request == null) throw new PinedaAppException("No Request is Made", 400);
             Project project = BindProjectFromRequest(request);
@@ -73,8 +73,7 @@ namespace PinedaApp.Services
 
             newId = project.Id;
 
-            ProjectResponse projectResponse = CreateProjectResponse(project);
-            return CreateResponse("success", ("project", projectResponse));
+            return CreateProjectResponse(project);
         }
 
         private Project? BindProjectFromRequest(ProjectRequest request)
@@ -85,7 +84,7 @@ namespace PinedaApp.Services
                 throw new PinedaAppException("Validation Error", 400, new ValidationException(checks));
             }
 
-            Project portfolio = new Project()
+            Project portfolio = new()
             {
                 ExperienceId = request.ExperienceId,
                 ProjectName = request.ProjectName,
@@ -122,8 +121,7 @@ namespace PinedaApp.Services
 
         private ProjectResponse CreateProjectResponse(Project project)
         {
-            ProjectResponse response = new ProjectResponse
-            (
+            ProjectResponse response = new (
                 project.Id,
                 project.ProjectName,
                 project.ProjectDescription,

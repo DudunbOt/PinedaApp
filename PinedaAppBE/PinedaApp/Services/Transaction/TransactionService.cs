@@ -17,15 +17,14 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public Response GetTransaction(int id)
+        public TransactionResponse GetTransaction(int id)
         {
             Transaction transaction = _context.Transaction.FirstOrDefault(x => x.Id == id) ?? throw new PinedaAppException($"Transaction with id {id} not found");
 
-            TransactionResponse response = CreateTransactionResponse(transaction);
-            return CreateResponse("success", ("transaction", response));
+            return CreateTransactionResponse(transaction);
         }
 
-        public Response GetTransactions()
+        public List<TransactionResponse> GetTransactions()
         {
             List<Transaction> transactions = _context.Transaction.ToList();
             if(transactions == null || transactions.Count == 0)
@@ -40,10 +39,10 @@ namespace PinedaApp.Services
                 responses.Add(response);
             }
 
-            return CreateResponse("success", ("transaction", responses));
+            return responses;
         }
 
-        public Response UpsertTransaction(TransactionRequest request, out int newId, int? id = null)
+        public TransactionResponse UpsertTransaction(TransactionRequest request, out int newId, int? id = null)
         {
             Transaction transaction = BindTransactionFromRequest(request);
             Transaction toUpdate = null;
@@ -85,8 +84,7 @@ namespace PinedaApp.Services
 
             newId = transaction.Id;
 
-            TransactionResponse response = CreateTransactionResponse(transaction);
-            return CreateResponse("success", ("transaction", response));
+            return CreateTransactionResponse(transaction);
         }
 
         private Transaction? BindTransactionFromRequest(TransactionRequest request)

@@ -16,7 +16,7 @@ namespace PinedaApp.Services
             _context.SaveChanges();
         }
 
-        public Response GetTransactionCategories()
+        public List<TransactionCategoryResponse> GetTransactionCategories()
         {
             List<TransactionCategory> transactionCategories = _context.TransactionCategory.ToList();
             if (transactionCategories == null || transactionCategories.Count == 0)
@@ -31,19 +31,18 @@ namespace PinedaApp.Services
                 responses.Add(response);
             }
 
-            return CreateResponse("success", ("transactionCategory", responses));
+            return responses;
             
         }
 
-        public Response GetTransactionCategory(int id)
+        public TransactionCategoryResponse GetTransactionCategory(int id)
         {
             TransactionCategory transactionCategory = _context.TransactionCategory.FirstOrDefault(tc => tc.Id ==id) ?? throw new PinedaAppException($"Transaction Category with id {id} not found");
 
-            TransactionCategoryResponse response = CreateTransactionCategoryResponse(transactionCategory);
-            return CreateResponse("success", ("transactionCategory",  response));
+            return CreateTransactionCategoryResponse(transactionCategory);
         }
 
-        public Response UpsertTransactionCategory(TransactionCategoryRequest request, out int newId, int? id = 0)
+        public TransactionCategoryResponse UpsertTransactionCategory(TransactionCategoryRequest request, out int newId, int? id = 0)
         {
             TransactionCategory transactionCategory = BindTransactionCategoryFromRequest(request);
             TransactionCategory toUpdate = new();
@@ -72,8 +71,7 @@ namespace PinedaApp.Services
 
             newId = transactionCategory.Id;
 
-            TransactionCategoryResponse transactionCategoryResponse = CreateTransactionCategoryResponse(transactionCategory);
-            return CreateResponse("success", ("transactionCategory", transactionCategoryResponse));
+            return CreateTransactionCategoryResponse(transactionCategory);
         }
 
         private TransactionCategory? BindTransactionCategoryFromRequest(TransactionCategoryRequest request)
