@@ -13,6 +13,7 @@ namespace PinedaApp.Contracts
         string Phone,
         string Address,
         IFormFile? ProfilePicture,
-        string Occupation
+        string Occupation,
+        string Expertise
     );
 }
