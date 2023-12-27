@@ -1,5 +1,5 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '.env.development') });
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env.development") });
 
 module.exports = {
   // other configuration options...

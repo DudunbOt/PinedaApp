@@ -135,7 +135,9 @@ export default {
       this.UserProfile.portfolios = UserProfile.portfolios;
       this.UserProfile.occupation = UserProfile.occupation;
       this.UserProfile.bio = UserProfile.bio;
-      this.UserProfile.profilePicture = this.GetProfilePicture(UserProfile.profilePicture);
+      this.UserProfile.profilePicture = this.GetProfilePicture(
+        UserProfile.profilePicture
+      );
       this.UserProfile.expertises = UserProfile.expertises;
     },
 
