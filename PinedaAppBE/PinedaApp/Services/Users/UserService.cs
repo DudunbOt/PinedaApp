@@ -103,6 +103,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             toUpdate.Phone = user.Phone;
             toUpdate.Address = user.Address;
             toUpdate.Occupation = user.Occupation;
+            toUpdate.Expertise = user.Expertise;
             if (!string.IsNullOrEmpty(toUpdate.ProfilePicture) && user.ProfilePicture != null && toUpdate.ProfilePicture != user.ProfilePicture)
             {
                 toUpdate.ProfilePicture = user.ProfilePicture;
@@ -143,6 +144,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             Phone = request.Phone,
             Address = request.Address,
             Occupation = request.Occupation,
+            Expertise = request.Expertise,
             ProfilePicture = pfpFileName,
             UserRole = Role.User,
             CreatedAt = DateTime.Now,
@@ -207,7 +209,7 @@ public class UserService(PinedaAppContext context, IMapper mapper, IOptions<AppS
             .ProjectTo<ExperienceDto>(_mapper.ConfigurationProvider);
 
         List<string> expertise = [];
-        if (string.IsNullOrEmpty(user.Expertise)) expertise = user.Expertise.Split(',').ToList();
+        if (!string.IsNullOrEmpty(user.Expertise)) expertise = user.Expertise.Split(',').ToList();
 
         UserResponse response = new (
             user.Id,
